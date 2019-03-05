@@ -1,0 +1,13 @@
+@import "../_variables";
+
+.container {
+  padding-top: $spacer*2;
+  min-height: $spacer*55;
+}
+
+.footer {
+  margin-top: $spacer*4;
+  background-color: $gray-900;
+  color: $white;
+  padding: $spacer*2 $spacer*2 $spacer*4 $spacer*2;
+}

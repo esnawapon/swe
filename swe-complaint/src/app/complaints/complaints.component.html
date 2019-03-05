@@ -1,0 +1,76 @@
+<div class="card bg-white">
+  <h5 class="card-header">My complaints</h5>
+  <div class="card-body">
+    <form [formGroup]="form" (submit)="onSearch()" autocomplete="off">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="keyword">Search by topic or details</label>
+            <input id="keyword" type="text" class="form-control" placeholder="Search by topic or details" formControlName="keyword">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="date-from">Created date from</label>
+            <input id="date-from" type="text" class="form-control" placeholder="Created date from" formControlName="dateFrom">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="date-to">Created date to</label>
+            <input id="date-to" type="text" class="form-control" placeholder="Created date to" formControlName="dateTo">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="categoryId">Category</label>
+            <input id="categoryId" type="text" class="form-control" placeholder="All categories" formControlName="categoryId">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="status">Status</label>
+            <input id="status" type="text" class="form-control" placeholder="All statuses" formControlName="status">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="severity">Severity level</label>
+            <input id="severity" type="text" class="form-control" placeholder="All severity levels" formControlName="severity">
+          </div>
+        </div>
+      </div>
+      <div class="text-right">
+        <button type="submit" class="btn btn-dark">Search</button>
+      </div>
+    </form>
+  </div>
+</div>
+<table class="table table-hover table-sm" *ngIf="results && results.length">
+  <thead>
+    <tr>
+      <th>Complaint</th>
+      <th>Severity level</th>
+      <th>Created Date</th>
+      <th>Status</th>
+      <th>Assignee</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let result of results">
+      <td>
+        <a routerLink="/complaints/{{result.id}}">{{result.topic}}</a>
+      </td>
+      <td>{{result.severity}}</td>
+      <td>{{result.created}}</td>
+      <td>{{result.status}}</td>
+      <td [ngSwitch]="!!result.assignee">
+        <div *ngSwitchCase="true">{{result.assignee.firstname}}</div>
+        <div *ngSwitchCase="false">Waiting for relevant staff</div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<app-empty-results *ngIf="results && !results.length"></app-empty-results>
