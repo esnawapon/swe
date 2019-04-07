@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ComplaintRepository extends JpaRepository<Complaint, String> {
+public interface ComplaintRepository extends JpaRepository<Complaint, String> , ComplaintRepositoryCustom {
     @Query("select c from Complaint c where id = :id")
     public Complaint getOneById(@Param("id") String id);
 }

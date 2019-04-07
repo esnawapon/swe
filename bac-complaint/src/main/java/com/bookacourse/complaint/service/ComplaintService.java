@@ -1,5 +1,13 @@
 package com.bookacourse.complaint.service;
 
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Service;
+
 import com.bookacourse.complaint.AppConstant;
 import com.bookacourse.complaint.bean.ComplaintCreateRequest;
 import com.bookacourse.complaint.bean.ComplaintSearchRequest;
@@ -8,14 +16,6 @@ import com.bookacourse.complaint.model.Staff;
 import com.bookacourse.complaint.repository.ComplaintRepository;
 import com.bookacourse.complaint.util.DateUtil;
 import com.bookacourse.complaint.util.StringUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Service;
-
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
 
 @Service
 public class ComplaintService {
@@ -29,7 +29,8 @@ public class ComplaintService {
     private JdbcTemplate jdbc;
     public List<Complaint> search(ComplaintSearchRequest request) {
         QueryEntity query = genSqlForSearch(request);
-        List<Complaint> result = jdbc.query(query.getSql(), query.getParams(), new BeanPropertyRowMapper(Complaint.class));
+//        List<Complaint> result = jdbc.query(query.getSql(), query.getParams(), new BeanPropertyRowMapper(Complaint.class));
+        List<Complaint> result = complaintRepository.searchWithCondition(request);
         return result;
     }
 
@@ -62,7 +63,8 @@ public class ComplaintService {
         model.setUpdated(now);
         Staff forwardTo = autoForwarder.forwardTo(model);
         if (forwardTo != null) {
-            model.setAssigneeId(forwardTo.getId());
+//            model.setAssigneeId(forwardTo.getId());
+        	model.setStaff(forwardTo);
         }
         complaintRepository.save(model);
         return model;

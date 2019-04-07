@@ -3,6 +3,9 @@ package com.bookacourse.complaint.model;
 import lombok.Data;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -21,7 +24,11 @@ public class Complaint implements Serializable {
     private String ownerId;
     private Boolean incognito;
     private String categoryId;
-    private String assigneeId;
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "assignee_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Staff staff;
+//    private String assigneeId;
     private Date created;
     private Date updated;
 }
