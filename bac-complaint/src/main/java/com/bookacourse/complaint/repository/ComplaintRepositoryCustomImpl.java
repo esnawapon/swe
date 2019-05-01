@@ -35,7 +35,7 @@ public class ComplaintRepositoryCustomImpl implements ComplaintRepositoryCustom 
 			predicates.add(cb.like(cb.lower(complaint.get("topic")), '%' + request.getKeyword() + '%'));
 		}
 		if (StringUtil.isNotEmpty(request.getCategoryId())) {
-			predicates.add(cb.equal(complaint.get("category_id"), request.getCategoryId()));
+			predicates.add(cb.equal(complaint.get("categoryId"), request.getCategoryId()));
 		}
 		if (request.getDateFrom() != null) {
 			predicates.add(cb.greaterThanOrEqualTo(complaint.<Date>get("created"), request.getDateFrom()));
@@ -46,8 +46,13 @@ public class ComplaintRepositoryCustomImpl implements ComplaintRepositoryCustom 
 		if (StringUtil.isNotEmpty(request.getStatus())) {
 			predicates.add(cb.equal(complaint.get("status"), request.getStatus()));
 		}
+		if (request.getSeverity() != null) {
+			predicates.add(cb.equal(complaint.get("severity"), request.getSeverity()));
+		}
 		
 	    cq.where(predicates.toArray(new Predicate[0]));
+
+		cq.orderBy(cb.desc(complaint.get("created")));
 	 
 	    return em.createQuery(cq).getResultList();
 	}

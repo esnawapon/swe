@@ -7,7 +7,7 @@
           <div class="form-group">
             <label for="category">Category</label>
             <!-- <input id="category" type="text" class="form-control" formControlName="category"> -->
-            <select id="category" type="text" class="form-control" formControlName="category">
+            <select id="category" class="form-control" formControlName="category">
               <option *ngFor="let option of categoryOptions" [ngValue]="option">{{option.name}}</option>
             </select>
             <utils-form-control-error [control]="form.controls['category']" error="required">This field is required.</utils-form-control-error>
@@ -16,7 +16,7 @@
         <div class="col-md-6">
           <div class="form-group">
             <label for="severity">Severity level</label>
-            <select id="severity" type="text" class="form-control" formControlName="severity">
+            <select id="severity" class="form-control" formControlName="severity">
               <option *ngFor="let option of severityOptions" [ngValue]="option.level">{{option.name}}</option>
             </select>
           </div>

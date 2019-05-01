@@ -2,6 +2,7 @@ package com.bookacourse.complaint.service;
 
 import com.bookacourse.complaint.AppConstant;
 import com.bookacourse.complaint.bean.ComplaintCommentCreateRequest;
+import com.bookacourse.complaint.bean.CurrentUserBean;
 import com.bookacourse.complaint.model.Complaint;
 import com.bookacourse.complaint.model.ComplaintLog;
 import com.bookacourse.complaint.repository.AdminRepository;
@@ -33,37 +34,47 @@ public class ComplaintLogService {
         return complaintLogRepository.findAllByComplaintIdAndType(complaintId, AppConstant.LOG_TYPE.COMMENT.name());
     }
 
+    public ComplaintLog logStatusChange(Complaint before, Complaint after) {
+        ComplaintLog model = newLog(before.getId());
+        model.setType(AppConstant.LOG_TYPE.STATUS_CHANGE.name());
+        model.setStatusFrom(before.getStatus());
+        model.setStatusTo(after.getStatus());
+        model.setAssigneeFrom(before.getAssignee());
+        model.setAssigneeTo(after.getAssignee());
+        complaintLogRepository.save(model);
+        return model;
+    }
+
     public ComplaintLog logCreate(Complaint complaint) {
-        Date now = new Date();
-        ComplaintLog model = new ComplaintLog();
-        model.setId(UUID.randomUUID().toString());
-        model.setComplaintId(complaint.getId());
+        ComplaintLog model = newLog(complaint.getId());
         model.setType(AppConstant.LOG_TYPE.CREATE.name());
         model.setStatusTo(complaint.getStatus());
         model.setAssigneeTo(complaint.getAssignee());
-        model.setActionStudentId(complaint.getOwnerId());
-        model.setCreated(now);
-        model.setUpdated(now);
         complaintLogRepository.save(model);
         return model;
     }
 
     public ComplaintLog createComment(String complaintId, ComplaintCommentCreateRequest request) {
+        ComplaintLog model = newLog(complaintId);
+        model.setType(AppConstant.LOG_TYPE.COMMENT.name());
+        model.setComment(request.getComment());
+        complaintLogRepository.save(model);
+        return model;
+    }
+
+    private ComplaintLog newLog(String complaintId) {
         Date now = new Date();
         ComplaintLog model = new ComplaintLog();
         model.setId(UUID.randomUUID().toString());
         model.setComplaintId(complaintId);
-        model.setType(AppConstant.LOG_TYPE.COMMENT.name());
+        model.setCreated(now);
+        model.setUpdated(now);
         String userId = userService.getCurrentUserId();
         switch (userService.getCurrentUserType()) {
             case ADMIN: model.setActionAdmin(adminRepository.getOne(userId)); break;
             case STAFF: model.setActionStaff(staffRepository.getOne(userId)); break;
             case STUDENT: model.setActionStudentId(userService.getCurrentUserId()); break;
         }
-        model.setComment(request.getComment());
-        model.setCreated(now);
-        model.setUpdated(now);
-        complaintLogRepository.save(model);
         return model;
     }
 }

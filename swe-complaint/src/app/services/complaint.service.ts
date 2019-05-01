@@ -52,4 +52,8 @@ export class ComplaintService {
   addComment(id: string, params: ComplaintLog): Observable<ComplaintLog> {
     return this.http.post<ComplaintLog>(`${URL}/${id}/comment`, params, HTTP_OPTIONS);
   }
+
+  close(id: string): Observable<Complaint> {
+    return this.http.put<ComplaintLog>(`${URL}/${id}/close`, HTTP_OPTIONS);
+  }
 }

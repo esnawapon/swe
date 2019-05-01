@@ -27,27 +27,13 @@ public class ComplaintService {
     private UserService userService;
     @Autowired
     private AutoForwarder autoForwarder;
-    @Autowired
-    private JdbcTemplate jdbc;
     public List<Complaint> search(ComplaintSearchRequest request) {
-        QueryEntity query = genSqlForSearch(request);
-//        List<Complaint> result = jdbc.query(query.getSql(), query.getParams(), new BeanPropertyRowMapper(Complaint.class));
         List<Complaint> result = complaintRepository.searchWithCondition(request);
         return result;
     }
 
     public Complaint getOneById(String id) {
         return complaintRepository.getOneById(id);
-    }
-
-    private QueryEntity genSqlForSearch(ComplaintSearchRequest request) {
-        QueryEntity query = new QueryEntity("select * from complaint where true");
-        if (StringUtil.isNotEmpty(request.getKeyword())) query.appendSql(" and lower(topic) like ?").addParam("%" + request.getKeyword().toLowerCase().trim() + "%");
-        if (StringUtil.isNotEmpty(request.getCategoryId())) query.appendSql(" and category_id = ?").addParam(request.getCategoryId());
-        if (request.getDateFrom() != null) query.appendSql(" and date(created) >= to_date(?, 'YYYY-MM-DD')").addParam(DateUtil.format(request.getDateFrom()));
-        if (request.getDateTo() != null) query.appendSql(" and date(created) <= to_date(?, 'YYYY-MM-DD')").addParam(DateUtil.format(request.getDateTo()));
-        if (StringUtil.isNotEmpty(request.getStatus())) query.appendSql(" and status = ?").addParam(request.getStatus());
-        return query;
     }
 
     public Complaint create(ComplaintCreateRequest request) {
@@ -69,6 +55,18 @@ public class ComplaintService {
         }
         complaintRepository.save(model);
         complaintLogService.logCreate(model);
+        return model;
+    }
+
+    public Complaint close(String id) {
+        Date now = new Date();
+        Complaint model = complaintRepository.getOneById(id);
+        Complaint before = model.snapshot();
+        model.setAssignee(null);
+        model.setStatus(AppConstant.STATUS.DONE_DELETED.toString());
+        model.setUpdated(now);
+        complaintRepository.save(model);
+        complaintLogService.logStatusChange(before, model);
         return model;
     }
 }

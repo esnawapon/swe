@@ -15,8 +15,8 @@
         <div *ngSwitchCase="'CREATE'">Complaint was created</div>
         <div *ngSwitchCase="'STATUS_CHANGE'">
           <div>Status was changed</div>
-          <div>from '{{log.statusFrom}}'</div>
-          <div>to '{{log.statusTo}}'</div>
+          <div>from '{{log.statusFrom | status}}'</div>
+          <div>to '{{log.statusTo | status}}'</div>
         </div>
         <div *ngSwitchCase="'ASSIGNEE_CHANGE'">
           <div>Assignee was changed</div>

@@ -43,6 +43,12 @@ public class ComplaintController extends AbstractController {
         return success(result);
     }
 
+    @PutMapping(path="/{id}/close")
+    public ResponseEntity close(@PathVariable("id") String id) {
+        Object result = service.close(id);
+        return success(result);
+    }
+
     @GetMapping(path="/{id}/logs")
     public ResponseEntity getLogs(@PathVariable("id") String id) {
         Object result = logService.findAllByComplaintId(id);

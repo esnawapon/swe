@@ -31,4 +31,21 @@ public class Complaint implements Serializable {
 //    private String assigneeId;
     private Date created;
     private Date updated;
+
+    public Complaint snapshot() {
+        Complaint c = new Complaint();
+        c.id = this.id;
+        c.topic = this.topic;
+        c.content = this.content;
+        c.status = this.status;
+        c.severity = this.severity;
+        c.satisfaction = this.satisfaction;
+        c.ownerId = this.ownerId;
+        c.incognito = this.incognito;
+        c.categoryId = this.categoryId;
+        c.assignee = this.assignee;
+        c.created = this.created;
+        c.updated = this.updated;
+        return c;
+    }
 }

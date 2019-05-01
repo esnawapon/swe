@@ -12,13 +12,27 @@
         <div class="col-md-3">
           <div class="form-group">
             <label for="date-from">Created date from</label>
-            <input id="date-from" type="text" class="form-control" placeholder="Created date from" formControlName="dateFrom">
+            <div class="input-group">
+              <input class="form-control" placeholder="Created date from" formControlName="dateFrom" ngbDatepicker #dateFrom="ngbDatepicker">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" (click)="dateFrom.toggle()" type="button">
+                  <i class="fa fa-calendar"></i>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
             <label for="date-to">Created date to</label>
-            <input id="date-to" type="text" class="form-control" placeholder="Created date to" formControlName="dateTo">
+            <div class="input-group">
+                <input class="form-control" placeholder="Created date to" formControlName="dateTo" ngbDatepicker #dateTo="ngbDatepicker">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" (click)="dateTo.toggle()" type="button">
+                    <i class="fa fa-calendar"></i>
+                  </button>
+                </div>
+              </div>
           </div>
         </div>
       </div>
@@ -26,19 +40,28 @@
         <div class="col-md-3">
           <div class="form-group">
             <label for="categoryId">Category</label>
-            <input id="categoryId" type="text" class="form-control" placeholder="All categories" formControlName="categoryId">
+            <select id="categoryId" class="form-control" formControlName="categoryId">
+              <option [ngValue]="null">All categories</option>
+              <option *ngFor="let option of categoryOptions" [ngValue]="option.id">{{option.name}}</option>
+            </select>
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
             <label for="status">Status</label>
-            <input id="status" type="text" class="form-control" placeholder="All statuses" formControlName="status">
+            <select id="status" class="form-control" formControlName="status">
+              <option [ngValue]="null">All statuses</option>
+              <option *ngFor="let option of statusOptions" [ngValue]="option.value">{{option.name}}</option>
+            </select>
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
             <label for="severity">Severity level</label>
-            <input id="severity" type="text" class="form-control" placeholder="All severity levels" formControlName="severity">
+            <select id="severity" class="form-control" formControlName="severity">
+              <option [ngValue]="null">All levels</option>
+              <option *ngFor="let option of severityOptions" [ngValue]="option.level">{{option.name}}</option>
+            </select>
           </div>
         </div>
       </div>
@@ -63,9 +86,9 @@
       <td>
         <a routerLink="/complaints/{{result.id}}">{{result.topic}}</a>
       </td>
-      <td>{{result.severity}}</td>
+      <td [class.text-danger]="result.severity === 3">{{result.severity | severity}}</td>
       <td>{{result.created}}</td>
-      <td>{{result.status}}</td>
+      <td>{{result.status | status}}</td>
       <td [ngSwitch]="!!result.assignee">
         <div *ngSwitchCase="true">{{result.assignee | fullname}}</div>
         <div *ngSwitchCase="false" class="text-muted">Waiting for relevant staff</div>
