@@ -42,6 +42,32 @@
   </div>
 </div>
 <h5 class="mt-5">Comments</h5>
-<pre>
-  {{complaint | json}}
-</pre>
+<div class="row">
+  <div class="col-md-6">
+    <small class="text-muted" *ngIf="comments && !comments.length">No comments</small>
+    <div *ngIf="comments && comments.length">
+      <div class="card bg-white" *ngFor="let comment of comments">
+        <div class="card-body">
+          <p>{{comment.comment}}</p>
+          <small class="text-muted">
+            <span>By </span>
+            <span *ngIf="comment.actionStudentId">
+              <span [class.text-muted]="complaint.incognito">{{complaint.incognito ? 'Not revealing' : comment.actionStudentId}}</span>
+            </span>
+            <span *ngIf="comment.actionStaff">{{comment.actionStaff | fullname}}</span>
+            <span *ngIf="comment.actionAdmin">{{comment.actionAdmin | fullname}}</span>
+            <span> at {{comment.timestamp}}</span>
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group">
+      <textarea id="comment" #comment class="form-control" placeholder="comment..."></textarea>
+    </div>
+    <div class="text-right">
+        <button type="button" class="btn btn-light" (click)="addComment(comment.value); comment.value = ''">Add comment</button>
+      </div>
+  </div>
+</div>

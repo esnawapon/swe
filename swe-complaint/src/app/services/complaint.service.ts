@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { Complaint } from '../types';
+import { Complaint, ComplaintLog } from '../types';
 import { removeNullParams } from '../utils/http-util';
 import { COMPLAINT as URL } from './api-list';
 
@@ -39,5 +39,17 @@ export class ComplaintService {
 
   update(params: Complaint): Observable<Complaint> {
     return this.http.put<Complaint>(URL, params, HTTP_OPTIONS);
+  }
+
+  findLogsByComplaintId(complaintId: string): Observable<ComplaintLog[]> {
+    return this.http.get<ComplaintLog[]>(`${URL}/${complaintId}/logs`);
+  }
+
+  findCommentsByComplaintId(complaintId: string): Observable<ComplaintLog[]> {
+    return this.http.get<ComplaintLog[]>(`${URL}/${complaintId}/comments`);
+  }
+
+  addComment(id: string, params: ComplaintLog): Observable<ComplaintLog> {
+    return this.http.post<ComplaintLog>(`${URL}/${id}/comment`, params, HTTP_OPTIONS);
   }
 }

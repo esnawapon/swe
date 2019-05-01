@@ -30,10 +30,10 @@
       </td>
       <td>
         <div *ngIf="log.actionStudentId">
-            <div [class.text-muted]="complaint.incognito">{{complaint.incognito ? 'Not revealing' : log.actionStudentId}}</div>
+          <div [class.text-muted]="complaint.incognito">{{complaint.incognito ? 'Not revealing' : log.actionStudentId}}</div>
         </div>
-        <div *ngIf="actionStaff">{{log.actionStaff | fullname}}</div>
-        <div *ngIf="actionAdmin">{{log.actionAdmin | fullname}}</div>
+        <div *ngIf="log.actionStaff">{{log.actionStaff | fullname}}</div>
+        <div *ngIf="log.actionAdmin">{{log.actionAdmin | fullname}}</div>
       </td>
     </tr>
   </tbody>

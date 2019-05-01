@@ -1,5 +1,6 @@
 package com.bookacourse.complaint.controller;
 
+import com.bookacourse.complaint.bean.ComplaintCommentCreateRequest;
 import com.bookacourse.complaint.bean.ComplaintCreateRequest;
 import com.bookacourse.complaint.bean.ComplaintSearchRequest;
 import com.bookacourse.complaint.service.ComplaintLogService;
@@ -36,15 +37,27 @@ public class ComplaintController extends AbstractController {
         return success(result);
     }
 
+    @PostMapping(path="")
+    public ResponseEntity create(@Valid @RequestBody ComplaintCreateRequest request) {
+        Object result = service.create(request);
+        return success(result);
+    }
+
     @GetMapping(path="/{id}/logs")
     public ResponseEntity getLogs(@PathVariable("id") String id) {
         Object result = logService.findAllByComplaintId(id);
         return success(result);
     }
 
-    @PostMapping(path="")
-    public ResponseEntity create(@Valid @RequestBody ComplaintCreateRequest request) {
-        Object result = service.create(request);
+    @GetMapping(path="/{id}/comments")
+    public ResponseEntity getComments(@PathVariable("id") String id) {
+        Object result = logService.findAllCommentsByComplaintId(id);
+        return success(result);
+    }
+
+    @PostMapping(path="/{id}/comment")
+    public ResponseEntity create(@PathVariable("id") String id, @Valid @RequestBody ComplaintCommentCreateRequest request) {
+        Object result = logService.createComment(id, request);
         return success(result);
     }
 }

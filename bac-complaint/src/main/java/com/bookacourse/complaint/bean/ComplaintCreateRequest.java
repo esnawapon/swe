@@ -16,6 +16,4 @@ public class ComplaintCreateRequest extends AbstractRequest {
     @NotNull
     private String content;
     private Boolean incognito;
-
-
 }

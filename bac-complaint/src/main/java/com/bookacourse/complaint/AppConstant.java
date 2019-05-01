@@ -7,4 +7,7 @@ public class AppConstant {
     public enum LOG_TYPE {
         CREATE, STATUS_CHANGE, ASSIGNEE_CHANGE, COMMENT
     }
+    public enum USER_TYPE {
+        STUDENT, STAFF, ADMIN
+    }
 }
