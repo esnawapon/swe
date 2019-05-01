@@ -1,0 +1,43 @@
+<table class="table table-hover table-sm" *ngIf="complaintLogs && complaintLogs.length">
+  <thead>
+    <tr>
+      <th>Timestamp</th>
+      <th>Type</th>
+      <th>Details</th>
+      <th>By</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let log of complaintLogs">
+      <td>{{log.timestamp}}</td>
+      <td>{{log.type}}</td>
+      <td [ngSwitch]="log.type">
+        <div *ngSwitchCase="'CREATE'">Complaint was created</div>
+        <div *ngSwitchCase="'STATUS_CHANGE'">
+          <div>Status was changed</div>
+          <div>from '{{log.statusFrom}}'</div>
+          <div>to '{{log.statusTo}}'</div>
+        </div>
+        <div *ngSwitchCase="'ASSIGNEE_CHANGE'">
+          <div>Assignee was changed</div>
+          <div>from '{{log.assigneeFrom | fullname}}'</div>
+          <div>to '{{log.assigneeTo | fullname}}'</div>
+        </div>
+        <div *ngSwitchCase="'COMMENT'">
+            <div>Comment added</div>
+            <div text-muted>{{log.comment}}</div>
+        </div>
+      </td>
+      <td>
+        <div *ngIf="log.actionStudentId">
+            <div [class.text-muted]="complaint.incognito">{{complaint.incognito ? 'Not revealing' : log.actionStudentId}}</div>
+        </div>
+        <div *ngIf="actionStaff">{{log.actionStaff | fullname}}</div>
+        <div *ngIf="actionAdmin">{{log.actionAdmin | fullname}}</div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div class="form-group-btn text-right">
+  <button type="button" class="btn btn-light" (click)="location.back()">Back</button>
+</div>

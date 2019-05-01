@@ -15,9 +15,9 @@ export class ComplaintResolveService implements Resolve<{} | Complaint> {
 		private error: ResolveErrorService
 	) { }
 	resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<{} | Complaint> {
-    const id: string = route.paramMap.get('id');
-		if (id) {
-			return this.service.get(id)
+    const complaintId: string = route.paramMap.get('complaintId');
+		if (complaintId) {
+			return this.service.get(complaintId)
 				.pipe(catchError((e) => this.error.handle(e, route, state)));
 		} else {
 			return of({ incognito: false });

@@ -25,9 +25,9 @@ public class Complaint implements Serializable {
     private Boolean incognito;
     private String categoryId;
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "assignee_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "assignee_id", referencedColumnName = "id", insertable = true, updatable = true)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private Staff staff;
+    private Staff assignee;
 //    private String assigneeId;
     private Date created;
     private Date updated;

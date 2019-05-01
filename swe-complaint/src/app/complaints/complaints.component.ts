@@ -30,6 +30,7 @@ export class ComplaintsComponent implements OnInit {
   onSearch(): void {
     if (this.form.valid) {
       const params: {} = this.form.value;
+      console.log(params)
       this.form.disable();
       this.complaintService.query(params).pipe(
         finalize(() => {

@@ -22,6 +22,8 @@ public class ComplaintService {
     @Autowired
     private ComplaintRepository complaintRepository;
     @Autowired
+    private ComplaintLogService complaintLogService;
+    @Autowired
     private UserService userService;
     @Autowired
     private AutoForwarder autoForwarder;
@@ -63,10 +65,10 @@ public class ComplaintService {
         model.setUpdated(now);
         Staff forwardTo = autoForwarder.forwardTo(model);
         if (forwardTo != null) {
-//            model.setAssigneeId(forwardTo.getId());
-        	model.setStaff(forwardTo);
+        	model.setAssignee(forwardTo);
         }
         complaintRepository.save(model);
+        complaintLogService.logCreate(model);
         return model;
     }
 }

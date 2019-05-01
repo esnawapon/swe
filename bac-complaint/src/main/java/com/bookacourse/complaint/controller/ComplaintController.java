@@ -2,6 +2,7 @@ package com.bookacourse.complaint.controller;
 
 import com.bookacourse.complaint.bean.ComplaintCreateRequest;
 import com.bookacourse.complaint.bean.ComplaintSearchRequest;
+import com.bookacourse.complaint.service.ComplaintLogService;
 import com.bookacourse.complaint.service.ComplaintService;
 import com.bookacourse.complaint.util.StringUtil;
 import org.slf4j.Logger;
@@ -20,6 +21,9 @@ public class ComplaintController extends AbstractController {
     @Autowired
     private ComplaintService service;
 
+    @Autowired
+    private ComplaintLogService logService;
+
     @GetMapping(path="")
     public ResponseEntity search(@Valid ComplaintSearchRequest request) {
         Object results = service.search(request);
@@ -29,6 +33,12 @@ public class ComplaintController extends AbstractController {
     @GetMapping(path="/{id}")
     public ResponseEntity get(@PathVariable("id") String id) {
         Object result = service.getOneById(id);
+        return success(result);
+    }
+
+    @GetMapping(path="/{id}/logs")
+    public ResponseEntity getLogs(@PathVariable("id") String id) {
+        Object result = logService.findAllByComplaintId(id);
         return success(result);
     }
 

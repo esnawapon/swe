@@ -3,7 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { ComplaintsComponent } from './complaints/complaints.component';
 import { ComplaintCreateComponent } from './complaint-create/complaint-create.component';
 import { ComplaintDetailComponent } from './complaint-detail/complaint-detail.component';
-import { ComplaintCategoriesResolveService, ComplaintResolveService } from './resolvers';
+import { ComplaintLogComponent } from './complaint-log/complaint-log.component';
+import { ComplaintCategoriesResolveService, ComplaintResolveService, ComplaintLogsResolveService } from './resolvers';
 import { BlankPageComponent } from './blank-page/blank-page.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 
@@ -21,9 +22,17 @@ const routes: Routes = [
     }
   },
   {
-    path: 'complaints/:id',
+    path: 'complaints/:complaintId',
     component: ComplaintDetailComponent,
     resolve: {
+      complaint: ComplaintResolveService
+    }
+  },
+  {
+    path: 'complaints/:complaintId/logs',
+    component: ComplaintLogComponent,
+    resolve: {
+      complaintLogs: ComplaintLogsResolveService,
       complaint: ComplaintResolveService
     }
   }

@@ -14,11 +14,13 @@
             </tr>
             <tr>
               <th>Staff</th>
-              <td>{{complaint.assigneeId}}</td>
-            </tr>
+              <td [ngSwitch]="!!complaint.assignee">
+                <div *ngSwitchCase="true">{{complaint.assignee | fullname}}</div>
+                <div *ngSwitchCase="false" class="text-muted">Waiting for relevant staff</div>
+              </td>
             <tr>
               <th>Owner</th>
-              <td>{{complaint.incognito ? 'Incognito' : complaint.ownerId}}</td>
+              <td [class.text-muted]="complaint.incognito">{{complaint.incognito ? 'Not revealing' : complaint.ownerId}}</td>
             </tr>
             <tr>
               <th>Create</th>

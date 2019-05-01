@@ -27,3 +27,8 @@ hs_err_pid*
 **/.idea
 **/.editorconfig
 **/out
+
+**/.classpath
+**/.project
+**/.settings
+**/bin

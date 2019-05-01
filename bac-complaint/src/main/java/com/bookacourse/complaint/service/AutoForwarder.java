@@ -11,9 +11,9 @@ public class AutoForwarder {
     @Autowired
     private StaffRepository staffRepository;
     public Staff forwardTo(Complaint complaint) {
-        if (Math.random() > 0.5) {
+//        if (Math.random() > 0.5) {
             return staffRepository.getOne("10001");
-        }
-        return null;
+//        }
+//        return null;
     }
 }

@@ -67,8 +67,8 @@
       <td>{{result.created}}</td>
       <td>{{result.status}}</td>
       <td [ngSwitch]="!!result.assignee">
-        <div *ngSwitchCase="true">{{result.assignee.firstname}}</div>
-        <div *ngSwitchCase="false">Waiting for relevant staff</div>
+        <div *ngSwitchCase="true">{{result.assignee | fullname}}</div>
+        <div *ngSwitchCase="false" class="text-muted">Waiting for relevant staff</div>
       </td>
     </tr>
   </tbody>
