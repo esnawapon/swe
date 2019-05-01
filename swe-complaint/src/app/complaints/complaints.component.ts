@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { finalize } from 'rxjs/operators';
 import { Complaint, SERVERITY_LEVELS, SeverityLevel, STATUSES, Status, ComplaintCategory } from '../types';
 import { ComplaintService } from '../services';
@@ -11,6 +12,7 @@ import { formatNgbDate } from '../utils/date-util';
   templateUrl: './complaints.component.html'
 })
 export class ComplaintsComponent implements OnInit {
+  faCalendar = faCalendar;
   form: FormGroup;
   results: Complaint[];
   severityOptions: SeverityLevel[] = SERVERITY_LEVELS;

@@ -16,7 +16,7 @@
               <input class="form-control" placeholder="Created date from" formControlName="dateFrom" ngbDatepicker #dateFrom="ngbDatepicker">
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary" (click)="dateFrom.toggle()" type="button">
-                  <i class="fa fa-calendar"></i>
+                  <fa-icon [icon]="faCalendar"></fa-icon>
                 </button>
               </div>
             </div>
@@ -29,7 +29,7 @@
                 <input class="form-control" placeholder="Created date to" formControlName="dateTo" ngbDatepicker #dateTo="ngbDatepicker">
                 <div class="input-group-append">
                   <button class="btn btn-outline-secondary" (click)="dateTo.toggle()" type="button">
-                    <i class="fa fa-calendar"></i>
+                    <fa-icon [icon]="faCalendar"></fa-icon>
                   </button>
                 </div>
               </div>
