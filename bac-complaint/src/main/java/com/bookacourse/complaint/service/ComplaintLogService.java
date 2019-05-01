@@ -2,7 +2,7 @@ package com.bookacourse.complaint.service;
 
 import com.bookacourse.complaint.AppConstant;
 import com.bookacourse.complaint.bean.ComplaintCommentCreateRequest;
-import com.bookacourse.complaint.bean.CurrentUserBean;
+import com.bookacourse.complaint.bean.CurrentUser;
 import com.bookacourse.complaint.model.Complaint;
 import com.bookacourse.complaint.model.ComplaintLog;
 import com.bookacourse.complaint.repository.AdminRepository;
@@ -11,6 +11,7 @@ import com.bookacourse.complaint.repository.StaffRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -25,6 +26,8 @@ public class ComplaintLogService {
     private AdminRepository adminRepository;
     @Autowired
     private StaffRepository staffRepository;
+    @Autowired
+    private HttpServletRequest httpServletRequest;
 
     public List<ComplaintLog> findAllByComplaintId(String complaintId) {
         return complaintLogRepository.findAllByComplaintId(complaintId);
@@ -63,17 +66,17 @@ public class ComplaintLogService {
     }
 
     private ComplaintLog newLog(String complaintId) {
+        CurrentUser user = (CurrentUser) httpServletRequest.getSession().getAttribute("user");
         Date now = new Date();
         ComplaintLog model = new ComplaintLog();
         model.setId(UUID.randomUUID().toString());
         model.setComplaintId(complaintId);
         model.setCreated(now);
         model.setUpdated(now);
-        String userId = userService.getCurrentUserId();
-        switch (userService.getCurrentUserType()) {
-            case ADMIN: model.setActionAdmin(adminRepository.getOne(userId)); break;
-            case STAFF: model.setActionStaff(staffRepository.getOne(userId)); break;
-            case STUDENT: model.setActionStudentId(userService.getCurrentUserId()); break;
+        switch (AppConstant.USER_TYPE.valueOf(user.getType())) {
+            case ADMIN: model.setActionAdmin(adminRepository.getOne(user.getId())); break;
+            case STAFF: model.setActionStaff(staffRepository.getOne(user.getId())); break;
+            case STUDENT: model.setActionStudentId(user.getId()); break;
         }
         return model;
     }

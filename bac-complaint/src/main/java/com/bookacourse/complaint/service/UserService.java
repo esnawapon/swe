@@ -1,23 +1,49 @@
 package com.bookacourse.complaint.service;
 
 import com.bookacourse.complaint.AppConstant;
-import com.bookacourse.complaint.bean.CurrentUserBean;
+import com.bookacourse.complaint.bean.CurrentUser;
+import com.bookacourse.complaint.bean.LoginRequest;
+import com.bookacourse.complaint.model.Admin;
+import com.bookacourse.complaint.model.Staff;
+import com.bookacourse.complaint.repository.AdminRepository;
+import com.bookacourse.complaint.repository.StaffRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 @Service
 public class UserService {
-    public String getCurrentUserId() {
-        return "es.nawapon";
-    }
-    public AppConstant.USER_TYPE getCurrentUserType() {
-        return AppConstant.USER_TYPE.STUDENT;
+    @Autowired
+    private StaffRepository staffRepository;
+    @Autowired
+    private AdminRepository adminRepository;
+
+    public Staff getStaffById(String id) {
+        return staffRepository.getOne(id);
     }
 
-    public CurrentUserBean getCurrentUser() {
-        CurrentUserBean currentUser = new CurrentUserBean();
-        currentUser.setType(AppConstant.USER_TYPE.STUDENT.name());
-        currentUser.setId("es.nawapon");
-        currentUser.setName("Nawapon Rattanakansaeng");
-        return currentUser;
+    public Admin getAdminById(String id) {
+        return adminRepository.getOne(id);
+    }
+
+    public CurrentUser login(LoginRequest request) {
+        Admin admin = null;
+        Staff staff = null;
+        String student = null;
+        switch (AppConstant.USER_TYPE.valueOf(request.getType())) {
+            case ADMIN: admin = getAdminById(request.getId()); break;
+            case STAFF: staff = getStaffById(request.getId()); break;
+            case STUDENT: student = request.getId(); break;
+            default: return null;
+        }
+        CurrentUser user = new CurrentUser();
+        user.setId(request.getId());
+        user.setType(request.getType());
+        if (admin != null) {
+            user.setName(admin.getFirstname() + " " + admin.getLastname());
+        } else if (staff != null) {
+            user.setName(staff.getFirstname() + " " + staff.getLastname());
+        } else {
+            user.setName(student);
+        }
+        return user;
     }
 }

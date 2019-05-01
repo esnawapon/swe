@@ -7,4 +7,7 @@ public abstract class AbstractController {
     protected ResponseEntity success(Object object) {
         return new ResponseEntity<>(object == null ? "null" : object, HttpStatus.OK);
     }
+    protected ResponseEntity badRequest() {
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
 }

@@ -1,11 +1,12 @@
 package com.bookacourse.complaint.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import com.bookacourse.complaint.bean.CurrentUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import com.bookacourse.complaint.AppConstant;
@@ -14,8 +15,8 @@ import com.bookacourse.complaint.bean.ComplaintSearchRequest;
 import com.bookacourse.complaint.model.Complaint;
 import com.bookacourse.complaint.model.Staff;
 import com.bookacourse.complaint.repository.ComplaintRepository;
-import com.bookacourse.complaint.util.DateUtil;
-import com.bookacourse.complaint.util.StringUtil;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Service
 public class ComplaintService {
@@ -24,9 +25,10 @@ public class ComplaintService {
     @Autowired
     private ComplaintLogService complaintLogService;
     @Autowired
-    private UserService userService;
-    @Autowired
     private AutoForwarder autoForwarder;
+    @Autowired
+    private HttpServletRequest httpServletRequest;
+
     public List<Complaint> search(ComplaintSearchRequest request) {
         List<Complaint> result = complaintRepository.searchWithCondition(request);
         return result;
@@ -37,6 +39,7 @@ public class ComplaintService {
     }
 
     public Complaint create(ComplaintCreateRequest request) {
+        CurrentUser user = (CurrentUser) httpServletRequest.getSession().getAttribute("user");
         Date now = new Date();
         Complaint model = new Complaint();
         model.setId(UUID.randomUUID().toString());
@@ -44,7 +47,7 @@ public class ComplaintService {
         model.setContent(request.getContent());
         model.setStatus(AppConstant.STATUS.CREATED.name());
         model.setSeverity(request.getSeverity());
-        model.setOwnerId(userService.getCurrentUserId());
+        model.setOwnerId(user.getId());
         model.setIncognito(request.getIncognito());
         model.setCategoryId(request.getCategory().getId());
         model.setCreated(now);
