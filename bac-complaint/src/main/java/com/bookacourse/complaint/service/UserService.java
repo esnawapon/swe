@@ -9,12 +9,25 @@ import com.bookacourse.complaint.repository.AdminRepository;
 import com.bookacourse.complaint.repository.StaffRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import javax.servlet.http.HttpServletRequest;
+
 @Service
 public class UserService {
     @Autowired
     private StaffRepository staffRepository;
     @Autowired
     private AdminRepository adminRepository;
+    @Autowired
+    private HttpServletRequest httpServletRequest;
+
+    public CurrentUser currentUser() {
+        CurrentUser user = new CurrentUser();
+        user.setId("es.nawapon");
+        user.setName("es.nawapon");
+        user.setType("STUDENT");
+        return user;
+//        return (CurrentUser) httpServletRequest.getSession().getAttribute("user");
+    }
 
     public Staff getStaffById(String id) {
         return staffRepository.getOne(id);

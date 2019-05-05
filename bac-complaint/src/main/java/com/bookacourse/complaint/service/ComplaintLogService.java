@@ -11,7 +11,6 @@ import com.bookacourse.complaint.repository.StaffRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -26,8 +25,6 @@ public class ComplaintLogService {
     private AdminRepository adminRepository;
     @Autowired
     private StaffRepository staffRepository;
-    @Autowired
-    private HttpServletRequest httpServletRequest;
 
     public List<ComplaintLog> findAllByComplaintId(String complaintId) {
         return complaintLogRepository.findAllByComplaintId(complaintId);
@@ -66,7 +63,7 @@ public class ComplaintLogService {
     }
 
     private ComplaintLog newLog(String complaintId) {
-        CurrentUser user = (CurrentUser) httpServletRequest.getSession().getAttribute("user");
+        CurrentUser user = userService.currentUser();
         Date now = new Date();
         ComplaintLog model = new ComplaintLog();
         model.setId(UUID.randomUUID().toString());

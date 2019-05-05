@@ -16,8 +16,6 @@ import com.bookacourse.complaint.model.Complaint;
 import com.bookacourse.complaint.model.Staff;
 import com.bookacourse.complaint.repository.ComplaintRepository;
 
-import javax.servlet.http.HttpServletRequest;
-
 @Service
 public class ComplaintService {
     @Autowired
@@ -27,7 +25,7 @@ public class ComplaintService {
     @Autowired
     private AutoForwarder autoForwarder;
     @Autowired
-    private HttpServletRequest httpServletRequest;
+    private UserService userService;
 
     public List<Complaint> search(ComplaintSearchRequest request) {
         List<Complaint> result = complaintRepository.searchWithCondition(request);
@@ -39,7 +37,7 @@ public class ComplaintService {
     }
 
     public Complaint create(ComplaintCreateRequest request) {
-        CurrentUser user = (CurrentUser) httpServletRequest.getSession().getAttribute("user");
+        CurrentUser user = userService.currentUser();
         Date now = new Date();
         Complaint model = new Complaint();
         model.setId(UUID.randomUUID().toString());

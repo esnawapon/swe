@@ -19,7 +19,7 @@ public class UserController extends AbstractController {
 
     @GetMapping(path="/current")
     public ResponseEntity getCurrent(HttpServletRequest request) {
-        Object user = request.getSession().getAttribute("user");
+        Object user = service.currentUser();
         return success(user);
     }
 
