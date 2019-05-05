@@ -46,6 +46,36 @@ public class ComplaintController extends AbstractController {
     @PutMapping(path="/{id}/close")
     public ResponseEntity close(@PathVariable("id") String id) {
         Object result = service.close(id);
+        if (result == null) {
+            return badRequest();
+        }
+        return success(result);
+    }
+
+    @PutMapping(path="/{id}/acknowledge")
+    public ResponseEntity acknowledge(@PathVariable("id") String id) {
+        Object result = service.acknowledge(id);
+        if (result == null) {
+            return badRequest();
+        }
+        return success(result);
+    }
+
+    @PutMapping(path="/{id}/working")
+    public ResponseEntity working(@PathVariable("id") String id) {
+        Object result = service.working(id);
+        if (result == null) {
+            return badRequest();
+        }
+        return success(result);
+    }
+
+    @PutMapping(path="/{id}/complete")
+    public ResponseEntity complete(@PathVariable("id") String id) {
+        Object result = service.complete(id);
+        if (result == null) {
+            return badRequest();
+        }
         return success(result);
     }
 

@@ -16,6 +16,9 @@ import com.bookacourse.complaint.model.Complaint;
 import com.bookacourse.complaint.model.Staff;
 import com.bookacourse.complaint.repository.ComplaintRepository;
 
+import static com.bookacourse.complaint.AppConstant.STATUS;
+import static com.bookacourse.complaint.AppConstant.USER_TYPE;
+
 @Service
 public class ComplaintService {
     @Autowired
@@ -28,8 +31,12 @@ public class ComplaintService {
     private UserService userService;
 
     public List<Complaint> search(ComplaintSearchRequest request) {
-        List<Complaint> result = complaintRepository.searchWithCondition(request);
-        return result;
+        CurrentUser user = userService.currentUser();
+        switch (AppConstant.USER_TYPE.valueOf(user.getType())) {
+            case STUDENT: return complaintRepository.searchWithCondition(request, user.getId(), null);
+            case STAFF: return complaintRepository.searchWithCondition(request, null, user.getId());
+            default: ADMIN: return complaintRepository.searchWithCondition(request, null, null);
+        }
     }
 
     public Complaint getOneById(String id) {
@@ -60,12 +67,84 @@ public class ComplaintService {
     }
 
     public Complaint close(String id) {
+        CurrentUser user = userService.currentUser();
         Date now = new Date();
         Complaint model = complaintRepository.getOneById(id);
         Complaint before = model.snapshot();
-        model.setAssignee(null);
-        model.setStatus(AppConstant.STATUS.DONE_DELETED.toString());
         model.setUpdated(now);
+
+        if (
+            user.getType().equals(USER_TYPE.STUDENT.toString()) &&
+            model.getStatus().equals(STATUS.CREATED.toString())
+        ) {
+            model.setStatus(STATUS.DONE_DELETED.toString());
+            model.setAssignee(null);
+        } else if (
+            !user.getType().equals(USER_TYPE.STUDENT.toString()) &&
+            (
+                model.getStatus().equals(STATUS.CREATED.toString()) ||
+                model.getStatus().equals(STATUS.TO_DO.toString()) ||
+                model.getStatus().equals(STATUS.WORKING.toString())
+            )
+        ) {
+            model.setStatus(STATUS.DONE_UNSOLVED.toString());
+        } else {
+            return null;
+        }
+        complaintRepository.save(model);
+        complaintLogService.logStatusChange(before, model);
+        return model;
+    }
+
+    public Complaint acknowledge(String id) {
+        CurrentUser user = userService.currentUser();
+        if (user.getType().equals(USER_TYPE.STUDENT.toString())) {
+            return null;
+        }
+        Date now = new Date();
+        Complaint model = complaintRepository.getOneById(id);
+        if (!model.getStatus().equals(STATUS.CREATED.toString())) {
+            return null;
+        }
+        Complaint before = model.snapshot();
+        model.setUpdated(now);
+        model.setStatus(STATUS.TO_DO.toString());
+        complaintRepository.save(model);
+        complaintLogService.logStatusChange(before, model);
+        return model;
+    }
+
+    public Complaint working(String id) {
+        CurrentUser user = userService.currentUser();
+        if (user.getType().equals(USER_TYPE.STUDENT.toString())) {
+            return null;
+        }
+        Date now = new Date();
+        Complaint model = complaintRepository.getOneById(id);
+        if (!model.getStatus().equals(STATUS.TO_DO.toString())) {
+            return null;
+        }
+        Complaint before = model.snapshot();
+        model.setUpdated(now);
+        model.setStatus(STATUS.WORKING.toString());
+        complaintRepository.save(model);
+        complaintLogService.logStatusChange(before, model);
+        return model;
+    }
+
+    public Complaint complete(String id) {
+        CurrentUser user = userService.currentUser();
+        if (user.getType().equals(USER_TYPE.STUDENT.toString())) {
+            return null;
+        }
+        Date now = new Date();
+        Complaint model = complaintRepository.getOneById(id);
+        if (!model.getStatus().equals(STATUS.WORKING.toString())) {
+            return null;
+        }
+        Complaint before = model.snapshot();
+        model.setUpdated(now);
+        model.setStatus(STATUS.DONE_COMPLETED.toString());
         complaintRepository.save(model);
         complaintLogService.logStatusChange(before, model);
         return model;

@@ -10,5 +10,5 @@ import com.bookacourse.complaint.model.Complaint;
 @Repository
 public interface ComplaintRepositoryCustom {
 
-	List<Complaint> searchWithCondition(ComplaintSearchRequest request);
+	List<Complaint> searchWithCondition(ComplaintSearchRequest request, String ownerId, String assigneeId);
 }

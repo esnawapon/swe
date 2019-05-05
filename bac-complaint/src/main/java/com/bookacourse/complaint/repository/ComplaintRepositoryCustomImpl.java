@@ -24,7 +24,7 @@ public class ComplaintRepositoryCustomImpl implements ComplaintRepositoryCustom 
     private EntityManager em;
     
 	@Override
-	public List<Complaint> searchWithCondition(ComplaintSearchRequest request) {
+	public List<Complaint> searchWithCondition(ComplaintSearchRequest request, String ownerId, String assigneeId) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 	    CriteriaQuery<Complaint> cq = cb.createQuery(Complaint.class);
 	 
@@ -49,6 +49,12 @@ public class ComplaintRepositoryCustomImpl implements ComplaintRepositoryCustom 
 		if (request.getSeverity() != null) {
 			predicates.add(cb.equal(complaint.get("severity"), request.getSeverity()));
 		}
+		if (ownerId != null) {
+			predicates.add(cb.equal(complaint.get("ownerId"), ownerId));
+		}
+//		if (assigneeId != null) {
+//			predicates.add(cb.equal(complaint.get("assignee"), assigneeId));
+//		}
 		
 	    cq.where(predicates.toArray(new Predicate[0]));
 

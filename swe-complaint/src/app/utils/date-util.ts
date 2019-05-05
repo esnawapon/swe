@@ -1,5 +1,4 @@
 export const formatNgbDate = (ngbDate: { day: number, month: number, year: number }): string => {
-  console.log({ngbDate});
   if (!ngbDate || !ngbDate.day || !ngbDate.month || !ngbDate.year) return null;
   let month, day;
   if (ngbDate.month.toString().length < 2) {

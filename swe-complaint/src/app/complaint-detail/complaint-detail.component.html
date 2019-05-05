@@ -3,14 +3,26 @@
   <div class="card-body">
     <div class="row">
       <div class="col-md-8">
-          <p>{{complaint.content}}</p>
+        <p style="white-space: pre-line">{{complaint.content}}</p>
       </div>
       <div class="col-md-4">
         <table class="table table-sm">
           <tbody>
             <tr>
               <th>Status</th>
-              <td>{{complaint.status | status}}</td>
+              <td>
+                <div>{{complaint.status | status}}</div>
+                <div *ngIf="isAbleToChangeStatus()">
+                  <button *ngIf="complaint.status === 'CREATED'"
+                    type="button" class="btn btn-sm btn-block btn-outline-info"(click)="acknowledge()">Acknowledge</button>
+                  <button *ngIf="complaint.status === 'TO_DO'"
+                    type="button" class="btn btn-sm btn-block btn-outline-primary"(click)="working()">Working</button>
+                  <button *ngIf="complaint.status === 'WORKING'"
+                    type="button" class="btn btn-sm btn-block btn-outline-success"(click)="complete()">Complete</button>
+                  <button
+                    type="button" class="btn btn-sm btn-block btn-outline-secondary" (click)="close()">Close</button>
+                </div>
+              </td>
             </tr>
             <tr>
               <th>Staff</th>

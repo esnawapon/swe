@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 
 @Service
 public class UserService {
+    boolean mockStudent = false;
+    boolean mockStaff = true;
+    boolean mockAdmin = true;
     @Autowired
     private StaffRepository staffRepository;
     @Autowired
@@ -21,12 +24,28 @@ public class UserService {
     private HttpServletRequest httpServletRequest;
 
     public CurrentUser currentUser() {
-        CurrentUser user = new CurrentUser();
-        user.setId("es.nawapon");
-        user.setName("es.nawapon");
-        user.setType("STUDENT");
-        return user;
-//        return (CurrentUser) httpServletRequest.getSession().getAttribute("user");
+        if (mockStudent) {
+            CurrentUser user = new CurrentUser();
+            user.setId("es.nawapon");
+            user.setName("es.nawapon");
+            user.setType("STUDENT");
+            return user;
+        }
+        if (mockStaff) {
+            CurrentUser user = new CurrentUser();
+            user.setId("10001");
+            user.setName("Jeanne James");
+            user.setType("STAFF");
+            return user;
+        }
+        if (mockAdmin) {
+            CurrentUser user = new CurrentUser();
+            user.setId("10001");
+            user.setName("Admin");
+            user.setType("ADMIN");
+            return user;
+        }
+        return (CurrentUser) httpServletRequest.getSession().getAttribute("user");
     }
 
     public Staff getStaffById(String id) {

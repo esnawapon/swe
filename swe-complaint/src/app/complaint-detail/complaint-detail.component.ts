@@ -39,7 +39,7 @@ export class ComplaintDetailComponent implements OnInit {
   }
 
   close() {
-    const confirm = window.confirm('Confirm to close this complaint');
+    const confirm = window.confirm('Confirm closing this complaint');
     if (confirm) {
       this.complaintService.close(this.complaint.id)
       .subscribe(() => {
@@ -52,7 +52,71 @@ export class ComplaintDetailComponent implements OnInit {
     }
   }
 
+  complete() {
+    const confirm = window.confirm('Confirm complete this complaint');
+    if (confirm) {
+      this.complaintService.complete(this.complaint.id)
+      .subscribe(() => {
+        this.router.navigate(['blank'], { replaceUrl: true }).then(() => {
+          this.router.navigate(['/complaints', this.complaint.id], {
+            replaceUrl: true
+          });
+        });
+      }, (error) => {
+        console.log('error', error);
+        let message = error.error;
+        window.alert(message);
+      });
+    }
+  }
+
+  working() {
+    const confirm = window.confirm('Confirm working this complaint');
+    if (confirm) {
+      this.complaintService.working(this.complaint.id)
+      .subscribe(() => {
+        this.router.navigate(['blank'], { replaceUrl: true }).then(() => {
+          this.router.navigate(['/complaints', this.complaint.id], {
+            replaceUrl: true
+          });
+        });
+      }, (error) => {
+        console.log('error', error);
+        let message = error.error;
+        window.alert(message);
+      });
+    }
+  }
+
+  acknowledge() {
+    const confirm = window.confirm('Confirm acknowledge this complaint');
+    if (confirm) {
+      this.complaintService.acknowledge(this.complaint.id)
+      .subscribe(() => {
+        this.router.navigate(['blank'], { replaceUrl: true }).then(() => {
+          this.router.navigate(['/complaints', this.complaint.id], {
+            replaceUrl: true
+          });
+        });
+      }, (error) => {
+        console.log('error', error);
+        let message = error.error;
+        window.alert(message);
+      });
+    }
+  }
+
   isAbleToClose(): boolean {
     return this.currentUser.type === 'STUDENT' && this.complaint.status === 'CREATED';
+  }
+
+  isAbleToChangeStatus(): boolean {
+    return (
+      this.currentUser.type === 'STAFF' || this.currentUser.type === 'ADMIN'
+    ) && (
+      this.complaint.status === 'CREATED' ||
+      this.complaint.status === 'TO_DO' ||
+      this.complaint.status === 'WORKING'
+    );
   }
 }
