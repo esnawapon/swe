@@ -27,3 +27,10 @@ hs_err_pid*
 **/.idea
 **/.editorconfig
 **/out
+/.metadata/
+
+#eclipse
+.recommenders
+.settings
+.project
+.classpath
