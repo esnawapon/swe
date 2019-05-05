@@ -34,31 +34,20 @@ export class ComplaintCreateComponent implements OnInit, OnDestroy {
     this.complaint = this.route.snapshot.data['complaint'];
     this.categoryOptions = this.route.snapshot.data['categoryOptions'];
     this.form = new FormGroup({
-      id: new FormControl(this.complaint.id)
-    });
-    [
-      'id',
-      'category',
-      'topic',
-      'content',
-      'severity',
-      'incognito',
-    ].forEach((field) => {
-      this.form.addControl(field, new FormControl(this.complaint[field]));
-    });
-    [
-      'category',
-      'topic',
-      'content',
-      'severity',
-    ].forEach((field) => {
-      this.form.controls[field].setValidators(Validators.required);
+      category: new FormControl(null),
+      topic: new FormControl('', Validators.required),
+      content: new FormControl('', Validators.required),
+      severity: new FormControl(1, Validators.required),
+      incognito: new FormControl(false)
     });
     this.categoryControl = this.form.controls['category'];
     this.topicControl = this.form.controls['topic'];
     this.contentControl = this.form.controls['content'];
 
     this.categoryChangeSubs = this.categoryControl.valueChanges.subscribe((value) => {
+      if (!value) {
+        return;
+      }
       if (!this.topicControl.value || this.topicControl.untouched || !this.topicControl.dirty) {
         this.topicControl.setValue(value.defaultTopic);
       }
@@ -78,7 +67,7 @@ export class ComplaintCreateComponent implements OnInit, OnDestroy {
       const complaint: Complaint = this.form.value;
       this.submitting = true;
       this.form.disable();
-      this.complaintService.save(complaint).pipe(
+      this.complaintService.create(complaint).pipe(
         finalize(() => {
           this.submitting = false;
           this.form.enable();

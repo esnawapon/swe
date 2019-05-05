@@ -1,0 +1,35 @@
+<div class="card bg-white">
+  <h5 class="card-header">{{complaintCategory.id ? complaintCategory.name : 'Create Category complaint'}}</h5>
+  <div class="card-body">
+    <form [formGroup]="form" (submit)="onSubmit()" autocomplete="off" novalidate>
+    <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="name">Complaint name</label>
+            <input id="name" type="text" class="form-control" formControlName="name" placeholder="Complaint name">
+            <utils-form-control-error [control]="form.controls['name']" error="required">This field is required.</utils-form-control-error>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="default-topic">Default topic</label>
+            <input id="default-topic" type="text" class="form-control" formControlName="defaultTopic" placeholder="Default topic">
+            <utils-form-control-error [control]="form.controls['defaultTopic']" error="required">This field is required.</utils-form-control-error>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="default-content">Default content</label>
+        <textarea id="default-content" class="form-control" formControlName="defaultContent" placeholder="Default content"></textarea>
+        <utils-form-control-error [control]="form.controls['defaultContent']" error="required">This field is required.</utils-form-control-error>
+      </div>
+      <div class="form-group-btn text-right">
+        <button type="submit" class="btn btn-dark">Save</button>
+        <button *ngIf="complaintCategory.id" type="button" class="btn btn-danger" (click)="delete()">Delete</button>
+        <button type="button" class="btn btn-light" (click)="location.back()">Back</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<h5 class="card-header">Complaint Categories</h5>
+<h6 class="mt-4"><a routerLink="/complaint-categories/create">+ Create Category</a></h6>
+
+<table class="table table-hover table-sm mt-4" *ngIf="results && results.length">
+  <thead>
+    <tr>
+      <th>Category name</th>
+      <th>Default topic</th>
+      <th>Default content</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let result of results">
+      <td><a routerLink="/complaint-categories/{{result.id}}">{{result.name}}</a></td>
+      <td>{{result.defaultTopic}}</td>
+      <td>{{result.defaultContent}}</td>
+    </tr>
+  </tbody>
+</table>
+<app-empty-results *ngIf="results && !results.length"></app-empty-results>

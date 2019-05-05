@@ -8,6 +8,7 @@
             <label for="category">Category</label>
             <!-- <input id="category" type="text" class="form-control" formControlName="category"> -->
             <select id="category" class="form-control" formControlName="category">
+              <option [ngValue]="null">Others</option>
               <option *ngFor="let option of categoryOptions" [ngValue]="option">{{option.name}}</option>
             </select>
             <utils-form-control-error [control]="form.controls['category']" error="required">This field is required.</utils-form-control-error>
@@ -19,6 +20,7 @@
             <select id="severity" class="form-control" formControlName="severity">
               <option *ngFor="let option of severityOptions" [ngValue]="option.level">{{option.name}}</option>
             </select>
+            <utils-form-control-error [control]="form.controls['category']" error="required">This field is required.</utils-form-control-error>
           </div>
         </div>
       </div>
@@ -26,14 +28,14 @@
         <div class="col-md-6">
           <div class="form-group">
             <label for="topic">Topic</label>
-            <input id="topic" type="text" class="form-control" formControlName="topic">
+            <input id="topic" type="text" class="form-control" formControlName="topic" placeholder="Topic">
             <utils-form-control-error [control]="form.controls['topic']" error="required">This field is required.</utils-form-control-error>
           </div>
         </div>
       </div>
       <div class="form-group">
         <label for="content">Content</label>
-        <textarea id="content" class="form-control" formControlName="content"></textarea>
+        <textarea id="content" class="form-control" formControlName="content" placeholder="Content"></textarea>
         <utils-form-control-error [control]="form.controls['content']" error="required">This field is required.</utils-form-control-error>
       </div>
       <div class="form-inline">
@@ -47,4 +49,3 @@
     </form>
   </div>
 </div>
-<app-empty-results *ngIf="results && !results.length"></app-empty-results>

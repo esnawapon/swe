@@ -4,8 +4,11 @@ import { ComplaintsComponent } from './complaints/complaints.component';
 import { ComplaintCreateComponent } from './complaint-create/complaint-create.component';
 import { ComplaintDetailComponent } from './complaint-detail/complaint-detail.component';
 import { ComplaintLogComponent } from './complaint-log/complaint-log.component';
+import { ComplaintCategoriesComponent } from './complaint-categories/complaint-categories.component';
+import { ComplaintCategoryDetailComponent } from './complaint-category-detail/complaint-category-detail.component';
 import {
   ComplaintCategoriesResolveService,
+  ComplaintCategoryResolveService,
   ComplaintResolveService,
   ComplaintLogsResolveService,
   CurrentUserResolveService
@@ -47,7 +50,28 @@ const routes: Routes = [
       complaintLogs: ComplaintLogsResolveService,
       complaint: ComplaintResolveService
     }
-  }
+  },
+  {
+    path: 'complaint-categories',
+    component: ComplaintCategoriesComponent,
+    resolve: {
+      categoryOptions: ComplaintCategoriesResolveService
+    }
+  },
+  {
+    path: 'complaint-categories/create',
+    component: ComplaintCategoryDetailComponent,
+    resolve: {
+      complaintCategory: ComplaintCategoryResolveService
+    }
+  },
+  {
+    path: 'complaint-categories/:complaintCategoryId',
+    component: ComplaintCategoryDetailComponent,
+    resolve: {
+      complaintCategory: ComplaintCategoryResolveService
+    }
+  },
 ];
 
 @NgModule({

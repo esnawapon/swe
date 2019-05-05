@@ -17,6 +17,8 @@ import { ErrorPageComponent } from './error-page/error-page.component';
 import { FormControlErrorComponent } from './utils/form-control-error/form-control-error.component';
 import { ComplaintDetailComponent } from './complaint-detail/complaint-detail.component';
 import { ComplaintLogComponent } from './complaint-log/complaint-log.component';
+import { ComplaintCategoriesComponent } from './complaint-categories/complaint-categories.component';
+import { ComplaintCategoryDetailComponent } from './complaint-category-detail/complaint-category-detail.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { ComplaintLogComponent } from './complaint-log/complaint-log.component';
     ErrorPageComponent,
     FormControlErrorComponent,
     ComplaintDetailComponent,
-    ComplaintLogComponent
+    ComplaintLogComponent,
+    ComplaintCategoriesComponent,
+    ComplaintCategoryDetailComponent
   ],
   imports: [
     BrowserModule,

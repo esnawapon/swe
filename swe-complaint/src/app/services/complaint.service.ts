@@ -24,21 +24,8 @@ export class ComplaintService {
     return this.http.get<Complaint>(`${URL}/${id}`);
   }
 
-  save(params: Complaint): Observable<Complaint> {
-    console.log('saving', params);
-    if (params.id) {
-      return this.update(params);
-    } else {
-      return this.create(params);
-    }
-  }
-
   create(params: Complaint): Observable<Complaint> {
     return this.http.post<Complaint>(URL, params, HTTP_OPTIONS);
-  }
-
-  update(params: Complaint): Observable<Complaint> {
-    return this.http.put<Complaint>(URL, params, HTTP_OPTIONS);
   }
 
   findLogsByComplaintId(complaintId: string): Observable<ComplaintLog[]> {

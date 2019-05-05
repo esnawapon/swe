@@ -18,8 +18,7 @@ export class ComplaintCategoryService {
   }
 
   get(id: string): Observable<ComplaintCategory> {
-    // return this.http.get<ComplaintCategory>(`${URL}/${id}`);
-    return of<ComplaintCategory>({ id: 'test' });
+    return this.http.get<ComplaintCategory>(`${URL}/${id}`);
   }
 
   save(params: ComplaintCategory): Observable<ComplaintCategory> {
@@ -31,11 +30,14 @@ export class ComplaintCategoryService {
   }
 
   create(params: ComplaintCategory): Observable<ComplaintCategory> {
-    // return this.http.post<ComplaintCategory>(URL, params, HTTP_OPTIONS);
-    return of<ComplaintCategory>({ id: 'test' });
+    return this.http.post<ComplaintCategory>(URL, params, HTTP_OPTIONS);
   }
 
   update(params: ComplaintCategory): Observable<ComplaintCategory> {
     return this.http.put<ComplaintCategory>(URL, params, HTTP_OPTIONS);
+  }
+
+  delete(id: string): Observable<ComplaintCategory> {
+    return this.http.delete<ComplaintCategory>(`${URL}/${id}`, HTTP_OPTIONS);
   }
 }

@@ -3,7 +3,16 @@
   <!-- <button class="navbar-toggler" type="button"><span class="navbar-toggler-icon"></span></button> -->
   <ul class="navbar-nav mr-auto">
     <li class="nav-item"><a class="text-white nav-link" routerLink="/complaints">
-      {{user && user.type === 'ADMIN' ? 'Complaints list' : 'My complaints' }}
+      {{user && user.type === 'ADMIN' ? 'Complaints' : 'My complaints' }}
+    </a></li>
+    <li class="nav-item" *ngIf="user && user.type === 'ADMIN'"><a class="text-white nav-link" routerLink="/complaint-categories">
+      Complaint categories
+    </a></li>
+    <li class="nav-item" *ngIf="user && user.type === 'ADMIN'"><a class="text-white nav-link" routerLink="/auto-forwarder">
+      Auto forwarder
+    </a></li>
+    <li class="nav-item" *ngIf="user && user.type === 'ADMIN'"><a class="text-white nav-link" routerLink="/Report">
+      Report
     </a></li>
     <li class="nav-item" *ngIf="user && user.type === 'STUDENT'">
       <a class="text-white nav-link" routerLink="/complaints/create">Create complaint</a>
