@@ -19,6 +19,8 @@ import { ComplaintDetailComponent } from './complaint-detail/complaint-detail.co
 import { ComplaintLogComponent } from './complaint-log/complaint-log.component';
 import { ComplaintCategoriesComponent } from './complaint-categories/complaint-categories.component';
 import { ComplaintCategoryDetailComponent } from './complaint-category-detail/complaint-category-detail.component';
+import { StaffMappingComponent } from './staff-mapping/staff-mapping.component';
+import { StaffMappingDetailComponent } from './staff-mapping-detail/staff-mapping-detail.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { ComplaintCategoryDetailComponent } from './complaint-category-detail/co
     ComplaintDetailComponent,
     ComplaintLogComponent,
     ComplaintCategoriesComponent,
-    ComplaintCategoryDetailComponent
+    ComplaintCategoryDetailComponent,
+    StaffMappingComponent,
+    StaffMappingDetailComponent
   ],
   imports: [
     BrowserModule,

@@ -4,4 +4,5 @@ export * from './complaint';
 export * from './current-user';
 export * from './severity-level';
 export * from './status';
+export * from './staff-mapping';
 export * from './user';

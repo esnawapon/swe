@@ -1,0 +1,28 @@
+<h5 class="card-header">Auto forwarder</h5>
+<h6 class="mt-4"><a routerLink="/staff-mapping/create">+ Create staff mapping</a></h6>
+
+<table class="table table-hover table-sm mt-4" *ngIf="results && results.length">
+  <thead>
+    <tr>
+      <th>Staff name</th>
+      <th>Categories</th>
+      <th>Keywords</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let result of results">
+      <td><a routerLink="/staff-mapping/{{result.id}}">{{result | fullname}}</a></td>
+      <td>
+        <ul>
+          <li *ngFor="let item of result.categories">{{item.name}}</li>
+        </ul>
+      </td>
+      <td>
+        <ul>
+          <li *ngFor="let item of result.keywords">{{item}}</li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<app-empty-results *ngIf="results && !results.length"></app-empty-results>

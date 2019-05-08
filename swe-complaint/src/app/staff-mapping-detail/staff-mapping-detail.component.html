@@ -1,0 +1,39 @@
+<div class="card bg-white">
+  <h5 class="card-header">{{staffMapping.id ? staffMapping.firstname + ' ' + staffMapping.lastname : 'Create staff mapping'}}</h5>
+  <div class="card-body">
+    <form [formGroup]="form" (submit)="onSubmit()" autocomplete="off" novalidate>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group" *ngIf="!staffMapping.id">
+            <label for="staff">Staff</label>
+            <select id="staff" class="form-control" formControlName="staff">
+              <option [ngValue]="null">Select a staff</option>
+              <option *ngFor="let option of staffOptions" [ngValue]="option">{{option | fullname}}</option>
+            </select>
+            <utils-form-control-error [control]="form.controls['staff']" error="required">This field is required.</utils-form-control-error>
+          </div>
+          <div class="form-group">
+            <label>Categories</label>
+            <div class="form-group form-check" *ngFor="let control of form.controls.categories.controls; let i = index">
+              <input type="checkbox" class="form-check-input" id="categories-{{i}}" [formControl]="control">
+              <label class="form-check-label" for="categories-{{i}}">{{categoryOptions[i].name}}</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="keywords">Keywords</label>
+            <textarea id="keywords" class="form-control" formControlName="keywords" placeholder="Keywords"></textarea>
+            <utils-form-control-error [control]="form.controls['keywords']" error="required">This field is required.</utils-form-control-error>
+            <small class="text-muted">Use comma separate between keywords for example: network,slow</small>
+          </div>
+        </div>
+      </div>
+      <div class="form-group-btn text-right">
+        <button type="submit" class="btn btn-dark">Save</button>
+        <button *ngIf="staffMapping.id" type="button" class="btn btn-danger" (click)="delete()">Delete</button>
+        <button type="button" class="btn btn-light" (click)="location.back()">Back</button>
+      </div>
+    </form>
+  </div>
+</div>

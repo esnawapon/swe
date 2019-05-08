@@ -6,12 +6,17 @@ import { ComplaintDetailComponent } from './complaint-detail/complaint-detail.co
 import { ComplaintLogComponent } from './complaint-log/complaint-log.component';
 import { ComplaintCategoriesComponent } from './complaint-categories/complaint-categories.component';
 import { ComplaintCategoryDetailComponent } from './complaint-category-detail/complaint-category-detail.component';
+import { StaffMappingComponent } from './staff-mapping/staff-mapping.component';
+import { StaffMappingDetailComponent } from './staff-mapping-detail/staff-mapping-detail.component';
 import {
   ComplaintCategoriesResolveService,
   ComplaintCategoryResolveService,
   ComplaintResolveService,
   ComplaintLogsResolveService,
-  CurrentUserResolveService
+  CurrentUserResolveService,
+  StaffMappingsResolveService,
+  StaffMappingResolveService,
+  StaffsResolveService
 } from './resolvers';
 import { BlankPageComponent } from './blank-page/blank-page.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
@@ -72,6 +77,31 @@ const routes: Routes = [
       complaintCategory: ComplaintCategoryResolveService
     }
   },
+  {
+    path: 'staff-mapping',
+    component: StaffMappingComponent,
+    resolve: {
+      staffMappings: StaffMappingsResolveService
+    }
+  },
+  {
+    path: 'staff-mapping/create',
+    component: StaffMappingDetailComponent,
+    resolve: {
+      staffMapping: StaffMappingResolveService,
+      categoryOptions: ComplaintCategoriesResolveService,
+      staffOptions: StaffsResolveService
+    }
+  },
+  {
+    path: 'staff-mapping/:staffId',
+    component: StaffMappingDetailComponent,
+    resolve: {
+      staffMapping: StaffMappingResolveService,
+      categoryOptions: ComplaintCategoriesResolveService,
+      staffOptions: StaffsResolveService
+    }
+  }
 ];
 
 @NgModule({

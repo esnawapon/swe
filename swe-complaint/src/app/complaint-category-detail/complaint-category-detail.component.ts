@@ -45,6 +45,8 @@ export class ComplaintCategoryDetailComponent implements OnInit {
         console.log('error', error);
         let message = error.error;
         window.alert(message);
+        this.submitting = false;
+        this.form.enable();
       });
     } else {
       this.formService.focusInvalid();
