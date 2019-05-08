@@ -15,7 +15,8 @@ public class RedirectOnResourceNotFoundException {
 
     @ExceptionHandler(value = NoHandlerFoundException.class)
     public Object handleStaticResourceNotFound(final NoHandlerFoundException ex, HttpServletRequest req, RedirectAttributes redirectAttributes) {
-        if (req.getRequestURI().startsWith("/api"))
+        if (req.getRequestURI().startsWith("/api") || req.getRequestURI().startsWith("/user")
+        		|| req.getRequestURI().startsWith("/assert"))
             return this.getApiResourceNotFoundBody(ex, req);
         else {
 //            redirectAttributes.addFlashAttribute("errorMessage", "My Custom error message");
