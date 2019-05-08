@@ -1,23 +1,21 @@
 package com.bookacourse.complaint.service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import com.bookacourse.complaint.bean.CurrentUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bookacourse.complaint.AppConstant;
+import com.bookacourse.complaint.AppConstant.STATUS;
+import com.bookacourse.complaint.AppConstant.USER_TYPE;
 import com.bookacourse.complaint.bean.ComplaintCreateRequest;
 import com.bookacourse.complaint.bean.ComplaintSearchRequest;
+import com.bookacourse.complaint.bean.CurrentUser;
 import com.bookacourse.complaint.model.Complaint;
 import com.bookacourse.complaint.model.Staff;
 import com.bookacourse.complaint.repository.ComplaintRepository;
-
-import static com.bookacourse.complaint.AppConstant.STATUS;
-import static com.bookacourse.complaint.AppConstant.USER_TYPE;
 
 @Service
 public class ComplaintService {
@@ -59,7 +57,7 @@ public class ComplaintService {
         model.setUpdated(now);
         Staff forwardTo = autoForwarder.forwardTo(model);
         if (forwardTo != null) {
-        	model.setAssignee(forwardTo);
+        	model.setStaff(forwardTo);
         }
         complaintRepository.save(model);
         complaintLogService.logCreate(model);
@@ -78,7 +76,7 @@ public class ComplaintService {
             model.getStatus().equals(STATUS.CREATED.toString())
         ) {
             model.setStatus(STATUS.DONE_DELETED.toString());
-            model.setAssignee(null);
+            model.setStaff(null);
         } else if (
             !user.getType().equals(USER_TYPE.STUDENT.toString()) &&
             (

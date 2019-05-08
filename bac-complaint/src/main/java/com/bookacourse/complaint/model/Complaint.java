@@ -12,7 +12,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name="complaint")
-public class Complaint implements Serializable {
+public class Complaint {
 
     @Id
     private String id;
@@ -27,7 +27,7 @@ public class Complaint implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "assignee_id", referencedColumnName = "id", insertable = true, updatable = true)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private Staff assignee;
+    private Staff staff;
 //    private String assigneeId;
     private Date created;
     private Date updated;
@@ -43,7 +43,7 @@ public class Complaint implements Serializable {
         c.ownerId = this.ownerId;
         c.incognito = this.incognito;
         c.categoryId = this.categoryId;
-        c.assignee = this.assignee;
+        c.staff = this.staff;
         c.created = this.created;
         c.updated = this.updated;
         return c;

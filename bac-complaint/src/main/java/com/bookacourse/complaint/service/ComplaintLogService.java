@@ -39,8 +39,8 @@ public class ComplaintLogService {
         model.setType(AppConstant.LOG_TYPE.STATUS_CHANGE.name());
         model.setStatusFrom(before.getStatus());
         model.setStatusTo(after.getStatus());
-        model.setAssigneeFrom(before.getAssignee());
-        model.setAssigneeTo(after.getAssignee());
+        model.setAssigneeFrom(before.getStaff());
+        model.setAssigneeTo(after.getStaff());
         complaintLogRepository.save(model);
         return model;
     }
@@ -49,7 +49,7 @@ public class ComplaintLogService {
         ComplaintLog model = newLog(complaint.getId());
         model.setType(AppConstant.LOG_TYPE.CREATE.name());
         model.setStatusTo(complaint.getStatus());
-        model.setAssigneeTo(complaint.getAssignee());
+        model.setAssigneeTo(complaint.getStaff());
         complaintLogRepository.save(model);
         return model;
     }
