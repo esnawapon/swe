@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Repository;
 
 import com.bookacourse.complaint.bean.ComplaintSearchRequest;
 import com.bookacourse.complaint.model.Complaint;
+import com.bookacourse.complaint.model.Complaint_;
+import com.bookacourse.complaint.model.Staff;
 import com.bookacourse.complaint.util.StringUtil;
 
 @Repository
@@ -27,8 +30,10 @@ public class ComplaintRepositoryCustomImpl implements ComplaintRepositoryCustom 
 	public List<Complaint> searchWithCondition(ComplaintSearchRequest request, String ownerId, String assigneeId) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 	    CriteriaQuery<Complaint> cq = cb.createQuery(Complaint.class);
-	 
+	    
 	    Root<Complaint> complaint = cq.from(Complaint.class);
+	    Join<Complaint, Staff> staff = complaint.join(Complaint_.staff);
+
 	    List<Predicate> predicates = new ArrayList<>();
 	     
 		if (StringUtil.isNotEmpty(request.getKeyword())) {
@@ -52,9 +57,9 @@ public class ComplaintRepositoryCustomImpl implements ComplaintRepositoryCustom 
 		if (ownerId != null) {
 			predicates.add(cb.equal(complaint.get("ownerId"), ownerId));
 		}
-//		if (assigneeId != null) {
-//			predicates.add(cb.equal(complaint.get("assignee"), assigneeId));
-//		}
+		if (assigneeId != null) {
+			predicates.add(cb.equal(staff.get("id"), assigneeId));
+		}
 		
 	    cq.where(predicates.toArray(new Predicate[0]));
 
