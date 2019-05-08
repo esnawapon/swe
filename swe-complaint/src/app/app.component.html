@@ -3,23 +3,34 @@
   <!-- <button class="navbar-toggler" type="button"><span class="navbar-toggler-icon"></span></button> -->
   <ul class="navbar-nav mr-auto">
     <li class="nav-item"><a class="text-white nav-link" routerLink="/complaints">
+      <fa-icon [icon]="faFileAlt"></fa-icon>
       {{user && user.type === 'ADMIN' ? 'Complaints' : 'My complaints' }}
     </a></li>
     <li class="nav-item" *ngIf="user && user.type === 'ADMIN'"><a class="text-white nav-link" routerLink="/complaint-categories">
+      <fa-icon [icon]="faClipboard"></fa-icon>
       Complaint categories
     </a></li>
     <li class="nav-item" *ngIf="user && user.type === 'ADMIN'"><a class="text-white nav-link" routerLink="/staff-mapping">
+      <fa-icon [icon]="faBookReader"></fa-icon>
       Staff mapping
     </a></li>
     <li class="nav-item" *ngIf="user && user.type === 'ADMIN'"><a class="text-white nav-link" routerLink="/Report">
+      <fa-icon [icon]="faChartBar"></fa-icon>
       Report
     </a></li>
-    <li class="nav-item" *ngIf="user && user.type === 'STUDENT'">
-      <a class="text-white nav-link" routerLink="/complaints/create">Create complaint</a>
-    </li>
-    <li class="nav-item"><a class="text-white nav-link" routerLink="/logout">Logout</a></li>
+    <li class="nav-item" *ngIf="user && user.type === 'STUDENT'"><a class="text-white nav-link" routerLink="/complaints/create">
+      <fa-icon [icon]="faPencilAlt"></fa-icon>
+      Create complaint
+    </a></li>
+    <li class="nav-item"><a class="text-white nav-link" routerLink="/logout">
+      <fa-icon [icon]="faSignOutAlt"></fa-icon>
+      Logout
+    </a></li>
   </ul>
-  <span class="navbar-text text-white">{{user && user.name}}</span>
+  <span class="navbar-text text-white">
+    <fa-icon [icon]="faUser"></fa-icon>
+    {{user && user.name}}
+  </span>
 </div>
 <div class="container">
   <router-outlet></router-outlet>
