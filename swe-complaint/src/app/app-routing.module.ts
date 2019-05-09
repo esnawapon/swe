@@ -45,7 +45,8 @@ const routes: Routes = [
     component: ComplaintDetailComponent,
     resolve: {
       complaint: ComplaintResolveService,
-      currentUser: CurrentUserResolveService
+      currentUser: CurrentUserResolveService,
+      staffOptions: StaffsResolveService
     }
   },
   {

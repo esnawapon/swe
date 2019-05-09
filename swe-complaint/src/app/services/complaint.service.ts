@@ -41,18 +41,26 @@ export class ComplaintService {
   }
 
   close(id: string): Observable<Complaint> {
-    return this.http.put<ComplaintLog>(`${URL}/${id}/close`, HTTP_OPTIONS);
+    return this.http.put<Complaint>(`${URL}/${id}/close`, HTTP_OPTIONS);
   }
 
   acknowledge(id: string): Observable<Complaint> {
-    return this.http.put<ComplaintLog>(`${URL}/${id}/acknowledge`, HTTP_OPTIONS);
+    return this.http.put<Complaint>(`${URL}/${id}/acknowledge`, HTTP_OPTIONS);
   }
 
   working(id: string): Observable<Complaint> {
-    return this.http.put<ComplaintLog>(`${URL}/${id}/working`, HTTP_OPTIONS);
+    return this.http.put<Complaint>(`${URL}/${id}/working`, HTTP_OPTIONS);
   }
 
   complete(id: string): Observable<Complaint> {
-    return this.http.put<ComplaintLog>(`${URL}/${id}/complete`, HTTP_OPTIONS);
+    return this.http.put<Complaint>(`${URL}/${id}/complete`, HTTP_OPTIONS);
+  }
+
+  backToAdmin(id: string): Observable<Complaint> {
+    return this.http.put<Complaint>(`${URL}/${id}/back-to-admin`, HTTP_OPTIONS);
+  }
+
+  assigeTo(id: string, staffId: string): Observable<Complaint> {
+    return this.http.put<Complaint>(`${URL}/${id}/assign-to/${staffId}`, HTTP_OPTIONS);
   }
 }

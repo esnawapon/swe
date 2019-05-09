@@ -27,6 +27,8 @@ public class ComplaintService {
     private AutoForwarder autoForwarder;
     @Autowired
     private UserService userService;
+    @Autowired
+    private StaffService staffService;
 
     public List<Complaint> search(ComplaintSearchRequest request) {
         CurrentUser user = userService.currentUser();
@@ -57,7 +59,7 @@ public class ComplaintService {
         model.setUpdated(now);
         Staff forwardTo = autoForwarder.forwardTo(model);
         if (forwardTo != null) {
-        	model.setStaff(forwardTo);
+        	model.setAssignee(forwardTo);
         }
         complaintRepository.save(model);
         complaintLogService.logCreate(model);
@@ -76,7 +78,7 @@ public class ComplaintService {
             model.getStatus().equals(STATUS.CREATED.toString())
         ) {
             model.setStatus(STATUS.DONE_DELETED.toString());
-            model.setStaff(null);
+            model.setAssignee(null);
         } else if (
             !user.getType().equals(USER_TYPE.STUDENT.toString()) &&
             (
@@ -145,6 +147,51 @@ public class ComplaintService {
         model.setStatus(STATUS.DONE_COMPLETED.toString());
         complaintRepository.save(model);
         complaintLogService.logStatusChange(before, model);
+        return model;
+    }
+
+    public Complaint backToAdmin(String id) {
+        CurrentUser user = userService.currentUser();
+        if (user.getType().equals(USER_TYPE.STUDENT.toString())) {
+            return null;
+        }
+        Date now = new Date();
+        Complaint model = complaintRepository.getOneById(id);
+        if (model.getStatus().equals(STATUS.DONE_COMPLETED) ||
+            model.getStatus().equals(STATUS.DONE_DELETED) ||
+            model.getStatus().equals(STATUS.DONE_UNSOLVED)
+        ) {
+            return null;
+        }
+        Complaint before = model.snapshot();
+        model.setUpdated(now);
+        model.setStatus(STATUS.CREATED.toString());
+        model.setAssignee(null);
+        complaintRepository.save(model);
+        complaintLogService.logAssigneeChange(before, model);
+        return model;
+    }
+
+    public Complaint assignTo(String id, String staffId) {
+        CurrentUser user = userService.currentUser();
+        if (user.getType().equals(USER_TYPE.STUDENT.toString())) {
+            return null;
+        }
+        Date now = new Date();
+        Complaint model = complaintRepository.getOneById(id);
+        if (model.getStatus().equals(STATUS.DONE_COMPLETED) ||
+                model.getStatus().equals(STATUS.DONE_DELETED) ||
+                model.getStatus().equals(STATUS.DONE_UNSOLVED)
+        ) {
+            return null;
+        }
+        Complaint before = model.snapshot();
+        Staff staff = staffService.getOneById(staffId);
+        model.setUpdated(now);
+        model.setStatus(STATUS.CREATED.toString());
+        model.setAssignee(staff);
+        complaintRepository.save(model);
+        complaintLogService.logAssigneeChange(before, model);
         return model;
     }
 }

@@ -5,11 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -32,7 +28,7 @@ public class ComplaintRepositoryCustomImpl implements ComplaintRepositoryCustom 
 	    CriteriaQuery<Complaint> cq = cb.createQuery(Complaint.class);
 	    
 	    Root<Complaint> complaint = cq.from(Complaint.class);
-	    Join<Complaint, Staff> staff = complaint.join(Complaint_.staff);
+	    Join<Complaint, Staff> assignee = complaint.join(Complaint_.assignee, JoinType.LEFT);
 
 	    List<Predicate> predicates = new ArrayList<>();
 	     
@@ -58,12 +54,12 @@ public class ComplaintRepositoryCustomImpl implements ComplaintRepositoryCustom 
 			predicates.add(cb.equal(complaint.get("ownerId"), ownerId));
 		}
 		if (assigneeId != null) {
-			predicates.add(cb.equal(staff.get("id"), assigneeId));
+			predicates.add(cb.equal(assignee.get("id"), assigneeId));
 		}
 		
 	    cq.where(predicates.toArray(new Predicate[0]));
 
-		cq.orderBy(cb.desc(complaint.get("created")));
+		cq.orderBy(cb.desc(complaint.get("updated")));
 	 
 	    return em.createQuery(cq).getResultList();
 	}

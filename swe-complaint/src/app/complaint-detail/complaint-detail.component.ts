@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { Complaint, ComplaintLog, CurrentUser } from '../types';
+import { Complaint, ComplaintLog, CurrentUser, User } from '../types';
 import { ComplaintService } from '../services';
 
 @Component({
@@ -12,6 +12,8 @@ export class ComplaintDetailComponent implements OnInit {
   currentUser: CurrentUser;
   complaint: Complaint;
   comments: ComplaintLog[];
+  staffOptions: User[];
+  selectingAnotherStaff: boolean = false;
   constructor(
     private route: ActivatedRoute,
     public location: Location,
@@ -22,6 +24,10 @@ export class ComplaintDetailComponent implements OnInit {
   ngOnInit() {
     this.complaint = this.route.snapshot.data['complaint'];
     this.currentUser = this.route.snapshot.data['currentUser'];
+    this.staffOptions = this.route.snapshot.data['staffOptions'];
+    if (this.complaint.assignee) {
+      this.staffOptions = this.staffOptions.filter(each => each.id !== this.complaint.assignee.id)
+    }
     this.loadComments();
   }
 
@@ -106,6 +112,38 @@ export class ComplaintDetailComponent implements OnInit {
     }
   }
 
+  backToAdmin() {
+    const confirm = window.confirm('Confirm send this complaint back to admin');
+    if (confirm) {
+      this.complaintService.backToAdmin(this.complaint.id)
+      .subscribe(() => {
+        this.router.navigate(['/complaints'], {
+          replaceUrl: true
+        });
+      }, (error) => {
+        console.log('error', error);
+        let message = error.error;
+        window.alert(message);
+      });
+    }
+  }
+
+  assignTo(staffId: string) {
+    const confirm = window.confirm('Confirm assign this complaint to that staff');
+    if (confirm) {
+      this.complaintService.assigeTo(this.complaint.id, staffId)
+      .subscribe(() => {
+        this.router.navigate(['/complaints'], {
+          replaceUrl: true
+        });
+      }, (error) => {
+        console.log('error', error);
+        let message = error.error;
+        window.alert(message);
+      });
+    }
+  }
+
   isAbleToClose(): boolean {
     return this.currentUser.type === 'STUDENT' && this.complaint.status === 'CREATED';
   }
@@ -118,5 +156,9 @@ export class ComplaintDetailComponent implements OnInit {
       this.complaint.status === 'TO_DO' ||
       this.complaint.status === 'WORKING'
     );
+  }
+
+  isAbleToChangeAssignee(): boolean {
+    return this.isAbleToChangeStatus();
   }
 }

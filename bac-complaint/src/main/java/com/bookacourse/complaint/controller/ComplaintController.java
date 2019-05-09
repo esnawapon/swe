@@ -79,6 +79,24 @@ public class ComplaintController extends AbstractController {
         return success(result);
     }
 
+    @PutMapping(path="/{id}/back-to-admin")
+    public ResponseEntity backToAdmin(@PathVariable("id") String id) {
+        Object result = service.backToAdmin(id);
+        if (result == null) {
+            return badRequest();
+        }
+        return success(result);
+    }
+
+    @PutMapping(path="/{id}/assign-to/{staffId}")
+    public ResponseEntity assignTo(@PathVariable("id") String id, @PathVariable("staffId") String staffId) {
+        Object result = service.assignTo(id, staffId);
+        if (result == null) {
+            return badRequest();
+        }
+        return success(result);
+    }
+
     @GetMapping(path="/{id}/logs")
     public ResponseEntity getLogs(@PathVariable("id") String id) {
         Object result = logService.findAllByComplaintId(id);

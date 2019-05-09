@@ -17,7 +17,7 @@ public class Complaint_ {
 	public static volatile SingularAttribute<Complaint, String> ownerId;
 	public static volatile SingularAttribute<Complaint, Boolean> incognito;
 	public static volatile SingularAttribute<Complaint, String> categoryId;
-	public static volatile SingularAttribute<Complaint, Staff> staff;
+	public static volatile SingularAttribute<Complaint, Staff> assignee;
 	public static volatile SingularAttribute<Complaint, Date> created;
 	public static volatile SingularAttribute<Complaint, Date> updated;
 }

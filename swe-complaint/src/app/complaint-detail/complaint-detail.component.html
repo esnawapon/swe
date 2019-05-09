@@ -14,21 +14,42 @@
                 <div>{{complaint.status | status}}</div>
                 <div *ngIf="isAbleToChangeStatus()">
                   <button *ngIf="complaint.status === 'CREATED'"
-                    type="button" class="btn btn-sm btn-block btn-outline-info"(click)="acknowledge()">Acknowledge</button>
+                    type="button" class="btn btn-sm btn-outline-info mr-2"(click)="acknowledge()">Acknowledge</button>
                   <button *ngIf="complaint.status === 'TO_DO'"
-                    type="button" class="btn btn-sm btn-block btn-outline-primary"(click)="working()">Working</button>
+                    type="button" class="btn btn-sm btn-outline-primary mr-2"(click)="working()">Working</button>
                   <button *ngIf="complaint.status === 'WORKING'"
-                    type="button" class="btn btn-sm btn-block btn-outline-success"(click)="complete()">Complete</button>
+                    type="button" class="btn btn-sm btn-outline-success mr-2"(click)="complete()">Complete</button>
                   <button
-                    type="button" class="btn btn-sm btn-block btn-outline-secondary" (click)="close()">Close</button>
+                    type="button" class="btn btn-sm btn-outline-secondary mr-2" (click)="close()">Close</button>
                 </div>
               </td>
             </tr>
             <tr>
               <th>Staff</th>
               <td [ngSwitch]="!!complaint.assignee">
-                <div *ngSwitchCase="true">{{complaint.assignee | fullname}}</div>
-                <div *ngSwitchCase="false" class="text-muted">Waiting for relevant staff</div>
+                <div *ngSwitchCase="true">
+                  <div *ngIf="!selectingAnotherStaff">
+                    {{complaint.assignee | fullname}}
+                  </div>
+                </div>
+                <div *ngSwitchCase="false" class="text-muted">
+                  <div *ngIf="!selectingAnotherStaff">
+                    Waiting for relevant staff
+                  </div>
+                </div>
+                <div *ngIf="isAbleToChangeAssignee()">
+                  <div *ngIf="selectingAnotherStaff" class="input-group">
+                    <select #selectStaff class="form-control input-sm">
+                      <option [value]="null">Select another staff</option>
+                      <option *ngFor="let option of staffOptions" [value]="option.id">{{option | fullname}}</option>
+                    </select>
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary" type="button" (click)="assignTo(selectStaff.value)">Assign</button>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-sm btn-link mr-2"(click)="selectingAnotherStaff = !selectingAnotherStaff">Change to another staff</button>
+                  <button *ngIf="complaint.assignee" type="button" class="btn btn-sm btn-link mr-2"(click)="backToAdmin()">Send back to admin</button>
+                </div>
               </td>
             <tr>
               <th>Owner</th>

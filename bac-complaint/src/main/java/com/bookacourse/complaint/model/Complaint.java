@@ -6,7 +6,6 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.io.Serializable;
 import java.util.Date;
 
 @Data
@@ -27,7 +26,7 @@ public class Complaint {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "assignee_id", referencedColumnName = "id", insertable = true, updatable = true)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private Staff staff;
+    private Staff assignee;
 //    private String assigneeId;
     private Date created;
     private Date updated;
@@ -43,7 +42,7 @@ public class Complaint {
         c.ownerId = this.ownerId;
         c.incognito = this.incognito;
         c.categoryId = this.categoryId;
-        c.staff = this.staff;
+        c.assignee = this.assignee;
         c.created = this.created;
         c.updated = this.updated;
         return c;
