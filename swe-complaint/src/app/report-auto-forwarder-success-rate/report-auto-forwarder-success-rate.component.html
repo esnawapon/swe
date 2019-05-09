@@ -1,0 +1,43 @@
+<div class="card bg-white">
+  <h5 class="card-header">Auto forwarder success rate report</h5>
+  <div class="card-body">
+    <form [formGroup]="form" (submit)="onGenerateReport()" autocomplete="off">
+      <div class="row">
+        <div class="col-5">
+          <div class="form-group">
+            <label for="date-from">Date from</label>
+            <div class="input-group">
+              <input class="form-control" placeholder="Created date from" formControlName="dateFrom" ngbDatepicker #dateFrom="ngbDatepicker">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" (click)="dateFrom.toggle()" type="button">
+                  <fa-icon [icon]="faCalendar"></fa-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-5">
+          <div class="form-group">
+            <label for="date-to">Date to</label>
+            <div class="input-group">
+                <input class="form-control" placeholder="Created date to" formControlName="dateTo" ngbDatepicker #dateTo="ngbDatepicker">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" (click)="dateTo.toggle()" type="button">
+                    <fa-icon [icon]="faCalendar"></fa-icon>
+                  </button>
+                </div>
+              </div>
+          </div>
+        </div>
+        <div class="col-2">
+          <div class="form-group">
+            <label>&nbsp;</label>
+            <div>
+              <button type="submit" class="btn btn-dark">Generate</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -8,6 +8,9 @@ import { ComplaintCategoriesComponent } from './complaint-categories/complaint-c
 import { ComplaintCategoryDetailComponent } from './complaint-category-detail/complaint-category-detail.component';
 import { StaffMappingComponent } from './staff-mapping/staff-mapping.component';
 import { StaffMappingDetailComponent } from './staff-mapping-detail/staff-mapping-detail.component';
+import { ReportComponent } from './report/report.component';
+import { ReportComplaintNumberComponent } from './report-complaint-number/report-complaint-number.component';
+import { ReportAutoForwarderSuccessRateComponent } from './report-auto-forwarder-success-rate/report-auto-forwarder-success-rate.component';
 import {
   ComplaintCategoriesResolveService,
   ComplaintCategoryResolveService,
@@ -102,6 +105,18 @@ const routes: Routes = [
       categoryOptions: ComplaintCategoriesResolveService,
       staffOptions: StaffsResolveService
     }
+  },
+  {
+    path: 'report',
+    component: ReportComponent
+  },
+  {
+    path: 'report/complaint-number',
+    component: ReportComplaintNumberComponent
+  },
+  {
+    path: 'report/auto-forwarder-success-rate',
+    component: ReportAutoForwarderSuccessRateComponent
   }
 ];
 

@@ -21,6 +21,9 @@ import { ComplaintCategoriesComponent } from './complaint-categories/complaint-c
 import { ComplaintCategoryDetailComponent } from './complaint-category-detail/complaint-category-detail.component';
 import { StaffMappingComponent } from './staff-mapping/staff-mapping.component';
 import { StaffMappingDetailComponent } from './staff-mapping-detail/staff-mapping-detail.component';
+import { ReportComponent } from './report/report.component';
+import { ReportComplaintNumberComponent } from './report-complaint-number/report-complaint-number.component';
+import { ReportAutoForwarderSuccessRateComponent } from './report-auto-forwarder-success-rate/report-auto-forwarder-success-rate.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +42,10 @@ import { StaffMappingDetailComponent } from './staff-mapping-detail/staff-mappin
     ComplaintCategoriesComponent,
     ComplaintCategoryDetailComponent,
     StaffMappingComponent,
-    StaffMappingDetailComponent
+    StaffMappingDetailComponent,
+    ReportComponent,
+    ReportComplaintNumberComponent,
+    ReportAutoForwarderSuccessRateComponent
   ],
   imports: [
     BrowserModule,

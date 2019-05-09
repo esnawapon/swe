@@ -4,3 +4,4 @@ export * from './form.service';
 export * from './staff-mapping.service';
 export * from './user.service';
 export * from './staff.service';
+export * from './report.service';

@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AutoForwarderLogRepository extends JpaRepository<AutoForwarderLog, String> {
+public interface AutoForwarderLogRepository extends JpaRepository<AutoForwarderLog, String>, AutoForwarderLogRepositoryCustom {
 }

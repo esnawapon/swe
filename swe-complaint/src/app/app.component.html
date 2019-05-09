@@ -14,7 +14,7 @@
       <fa-icon [icon]="faBookReader"></fa-icon>
       Staff mapping
     </a></li>
-    <li class="nav-item" *ngIf="user && user.type === 'ADMIN'"><a class="text-white nav-link" routerLink="/Report">
+    <li class="nav-item" *ngIf="user && user.type === 'ADMIN'"><a class="text-white nav-link" routerLink="/report">
       <fa-icon [icon]="faChartBar"></fa-icon>
       Report
     </a></li>
@@ -22,7 +22,7 @@
       <fa-icon [icon]="faPencilAlt"></fa-icon>
       Create complaint
     </a></li>
-    <li class="nav-item"><a class="text-white nav-link" routerLink="/logout">
+    <li class="nav-item"><a class="text-white nav-link" href="/logout">
       <fa-icon [icon]="faSignOutAlt"></fa-icon>
       Logout
     </a></li>
