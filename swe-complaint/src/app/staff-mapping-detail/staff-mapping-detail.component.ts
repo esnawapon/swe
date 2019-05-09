@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
 import { StaffMapping, ComplaintCategory, User } from '../types';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -21,8 +20,7 @@ export class StaffMappingDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private staffMappingService: StaffMappingService,
     private router: Router,
-    private formService: FormService,
-    public location: Location
+    private formService: FormService
   ) { }
 
   ngOnInit() {

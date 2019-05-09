@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
 import { Complaint, ComplaintLog, CurrentUser, User } from '../types';
 import { ComplaintService } from '../services';
 
@@ -16,7 +15,6 @@ export class ComplaintDetailComponent implements OnInit {
   selectingAnotherStaff: boolean = false;
   constructor(
     private route: ActivatedRoute,
-    public location: Location,
     private complaintService: ComplaintService,
     private router: Router
   ) { }

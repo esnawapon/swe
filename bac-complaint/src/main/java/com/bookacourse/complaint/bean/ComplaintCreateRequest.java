@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 @Data
 public class ComplaintCreateRequest extends AbstractRequest {
-    @NotNull @Valid
+    @Valid
     private EntityBean category;
     @NotNull
     private Integer severity;

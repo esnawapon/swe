@@ -32,7 +32,7 @@
       <div class="form-group-btn text-right">
         <button type="submit" class="btn btn-dark">Save</button>
         <button *ngIf="staffMapping.id" type="button" class="btn btn-danger" (click)="delete()">Delete</button>
-        <button type="button" class="btn btn-light" (click)="location.back()">Back</button>
+        <a routerLink="/staff-mapping" class="btn btn-light">Back</a>
       </div>
     </form>
   </div>

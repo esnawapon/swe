@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ComplaintCategory } from '../types';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -18,8 +17,7 @@ export class ComplaintCategoryDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private complaintCategoryService: ComplaintCategoryService,
     private router: Router,
-    private formService: FormService,
-    public location: Location
+    private formService: FormService
   ) { }
 
   ngOnInit() {

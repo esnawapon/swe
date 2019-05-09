@@ -54,7 +54,9 @@ public class ComplaintService {
         model.setSeverity(request.getSeverity());
         model.setOwnerId(user.getId());
         model.setIncognito(request.getIncognito());
-        model.setCategoryId(request.getCategory().getId());
+        if (request.getCategory() != null) {
+            model.setCategoryId(request.getCategory().getId());
+        }
         model.setCreated(now);
         model.setUpdated(now);
         Staff forwardTo = autoForwarder.forwardTo(model);
@@ -63,6 +65,7 @@ public class ComplaintService {
         }
         complaintRepository.save(model);
         complaintLogService.logCreate(model);
+        autoForwarder.saveLog(model);
         return model;
     }
 

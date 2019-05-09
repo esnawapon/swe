@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Location } from '@angular/common';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -26,8 +25,7 @@ export class ComplaintCreateComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private complaintService: ComplaintService,
     private router: Router,
-    private formService: FormService,
-    public location: Location
+    private formService: FormService
   ) { }
 
   ngOnInit() {

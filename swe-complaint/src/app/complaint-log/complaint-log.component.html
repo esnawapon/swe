@@ -39,5 +39,5 @@
   </tbody>
 </table>
 <div class="form-group-btn text-right">
-  <button type="button" class="btn btn-light" (click)="location.back()">Back</button>
+    <a [routerLink]="['/complaints', complaint.id]" class="btn btn-light">Back</a>
 </div>
