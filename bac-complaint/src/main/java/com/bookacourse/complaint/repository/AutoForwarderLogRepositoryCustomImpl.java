@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public class AutoForwarderLogRepositoryCustomerImpl implements AutoForwarderLogRepositoryCustom {
+public class AutoForwarderLogRepositoryCustomImpl implements AutoForwarderLogRepositoryCustom {
     @Autowired
     private EntityManager em;
 
