@@ -41,3 +41,5 @@
     </form>
   </div>
 </div>
+<div [class.hidden]="rawReportData && !rawReportData.length" id="chart" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+<app-empty-results *ngIf="rawReportData && !rawReportData.length"></app-empty-results>

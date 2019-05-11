@@ -1,3 +1,4 @@
+export * from './auto-forwarder-log';
 export * from './complaint-category';
 export * from './complaint-log';
 export * from './complaint';
