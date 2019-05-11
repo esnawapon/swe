@@ -7,13 +7,12 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.*;
 
+import com.bookacourse.complaint.bean.ReportRequest;
+import com.bookacourse.complaint.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.bookacourse.complaint.bean.ComplaintSearchRequest;
-import com.bookacourse.complaint.model.Complaint;
-import com.bookacourse.complaint.model.Complaint_;
-import com.bookacourse.complaint.model.Staff;
 import com.bookacourse.complaint.util.StringUtil;
 
 @Repository
@@ -64,4 +63,24 @@ public class ComplaintRepositoryCustomImpl implements ComplaintRepositoryCustom 
 	    return em.createQuery(cq).getResultList();
 	}
 
+	@Override
+	public List<ReportComplaintNumber> reportComplaintNumber(ReportRequest request) {
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<ReportComplaintNumber> query = builder.createQuery(ReportComplaintNumber.class);
+		Root<Complaint> complaint = query.from(Complaint.class);
+		List<Predicate> predicates = new ArrayList<>();
+		if (request.getDateFrom() != null) {
+			predicates.add(builder.greaterThanOrEqualTo(complaint.<Date>get("created"), request.getDateFrom()));
+		}
+		if (request.getDateTo() != null) {
+			predicates.add(builder.lessThanOrEqualTo(complaint.<Date>get("created"), request.getDateTo()));
+		}
+		query.multiselect(
+			complaint.get("categoryId"),
+			builder.count(complaint.get("id")).alias("count")
+		);
+		query.where(predicates.toArray(new Predicate[0]));
+		query.groupBy(complaint.get("categoryId"));
+		return em.createQuery(query).getResultList();
+	}
 }

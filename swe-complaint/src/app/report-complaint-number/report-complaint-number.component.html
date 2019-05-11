@@ -1,3 +1,48 @@
-<p>
-  report-complaint-number works!
-</p>
+<div class="card bg-white">
+  <h5 class="card-header">Complaint number</h5>
+  <div class="card-body">
+    <form [formGroup]="form" (submit)="onGenerateReport()" autocomplete="off">
+      <div class="row">
+        <div class="col-5">
+          <div class="form-group">
+            <label for="date-from">Date from</label>
+            <div class="input-group">
+              <input class="form-control" placeholder="Created date from" formControlName="dateFrom" ngbDatepicker #dateFrom="ngbDatepicker">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" (click)="dateFrom.toggle()" type="button">
+                  <fa-icon [icon]="faCalendar"></fa-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-5">
+          <div class="form-group">
+            <label for="date-to">Date to</label>
+            <div class="input-group">
+                <input class="form-control" placeholder="Created date to" formControlName="dateTo" ngbDatepicker #dateTo="ngbDatepicker">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" (click)="dateTo.toggle()" type="button">
+                    <fa-icon [icon]="faCalendar"></fa-icon>
+                  </button>
+                </div>
+              </div>
+          </div>
+        </div>
+        <div class="col-2 text-right">
+          <div class="form-group">
+            <label>&nbsp;</label>
+            <div>
+              <button type="submit" class="btn btn-dark">Generate</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group-btn text-right">
+        <a routerLink="/report" class="btn btn-light">Back</a>
+      </div>
+    </form>
+  </div>
+</div>
+<div [class.hidden]="rawReportData && !rawReportData.length" id="chart" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+<app-empty-results *ngIf="rawReportData && !rawReportData.length"></app-empty-results>

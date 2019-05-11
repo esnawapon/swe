@@ -1,6 +1,7 @@
 export * from './auto-forwarder-log';
 export * from './complaint-category';
 export * from './complaint-log';
+export * from './complaint-number';
 export * from './complaint';
 export * from './current-user';
 export * from './severity-level';

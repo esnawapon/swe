@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { removeNullParams } from '../utils/http-util';
 import { REPORT as URL } from './api-list';
-import { AutoForwarderLog } from '../types';
+import { AutoForwarderLog, ComplaintNumber } from '../types';
 
 const HTTP_OPTIONS = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -19,8 +19,8 @@ export class ReportService {
     return this.http.get<AutoForwarderLog[]>(`${URL}/auto-forwarder-success-rate`, { params: httpParams });
   }
 
-  complaintNumber(params: {}): Observable<{}> {
+  complaintNumber(params: ComplaintNumber[]): Observable<ComplaintNumber[]> {
     let httpParams = new HttpParams({ fromObject: removeNullParams(params) });
-    return this.http.get<{}>(`${URL}/complaint-number`, { params: httpParams });
+    return this.http.get<ComplaintNumber[]>(`${URL}/complaint-number`, { params: httpParams });
   }
 }

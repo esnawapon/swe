@@ -2,6 +2,8 @@ package com.bookacourse.complaint.repository;
 
 import java.util.List;
 
+import com.bookacourse.complaint.bean.ReportRequest;
+import com.bookacourse.complaint.model.ReportComplaintNumber;
 import org.springframework.stereotype.Repository;
 
 import com.bookacourse.complaint.bean.ComplaintSearchRequest;
@@ -11,4 +13,5 @@ import com.bookacourse.complaint.model.Complaint;
 public interface ComplaintRepositoryCustom {
 
 	List<Complaint> searchWithCondition(ComplaintSearchRequest request, String ownerId, String assigneeId);
+	List<ReportComplaintNumber> reportComplaintNumber(ReportRequest request);
 }

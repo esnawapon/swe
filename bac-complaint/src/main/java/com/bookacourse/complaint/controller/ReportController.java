@@ -16,8 +16,14 @@ public class ReportController extends AbstractController {
     @Autowired
     private ReportService service;
     @GetMapping(path="/auto-forwarder-success-rate")
-    public ResponseEntity search(@Valid ReportRequest request) {
+    public ResponseEntity autoForwarderSuccessRate(@Valid ReportRequest request) {
         Object results = service.autoForwarderSuccessRate(request);
+        return success(results);
+    }
+
+    @GetMapping(path="/complaint-number")
+    public ResponseEntity complaintNumber(@Valid ReportRequest request) {
+        Object results = service.complaintNumber(request);
         return success(results);
     }
 }

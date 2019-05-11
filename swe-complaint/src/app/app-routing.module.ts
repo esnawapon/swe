@@ -112,7 +112,10 @@ const routes: Routes = [
   },
   {
     path: 'report/complaint-number',
-    component: ReportComplaintNumberComponent
+    component: ReportComplaintNumberComponent,
+    resolve: {
+      categoryOptions: ComplaintCategoriesResolveService
+    }
   },
   {
     path: 'report/auto-forwarder-success-rate',
