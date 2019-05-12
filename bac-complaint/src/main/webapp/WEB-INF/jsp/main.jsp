@@ -27,11 +27,11 @@ MAIN JSP
 </head>
 <body>
   <app-root></app-root>
-  <script type="text/javascript" src="static/runtime.js"></script>
-  <script type="text/javascript" src="static/es2015-polyfills.js" nomodule></script>
-  <script type="text/javascript" src="static/polyfills.js"></script>
-  <script type="text/javascript" src="static/styles.js"></script>
-  <script type="text/javascript" src="static/vendor.js"></script>
-  <script type="text/javascript" src="static/main.js"></script>
+  <script type="text/javascript" src="public/runtime.js"></script>
+  <script type="text/javascript" src="public/es2015-polyfills.js" nomodule></script>
+  <script type="text/javascript" src="public/polyfills.js"></script>
+  <script type="text/javascript" src="public/styles.js"></script>
+  <script type="text/javascript" src="public/vendor.js"></script>
+  <script type="text/javascript" src="public/main.js"></script>
 </body>
 </html>
