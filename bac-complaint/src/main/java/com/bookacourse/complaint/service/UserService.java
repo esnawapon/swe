@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 @Service
 public class UserService {
     boolean mockStudent = false;
-    boolean mockStaff = true;
-    boolean mockAdmin = true;
+    boolean mockStaff = false;
+    boolean mockAdmin = false;
     @Autowired
     private StaffRepository staffRepository;
     @Autowired

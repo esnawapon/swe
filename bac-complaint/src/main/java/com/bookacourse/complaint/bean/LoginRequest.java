@@ -8,7 +8,6 @@ import javax.validation.constraints.NotNull;
 public class LoginRequest {
     @NotNull
     private String id;
-    @NotNull
     private String password;
     @NotNull
     private String type;
