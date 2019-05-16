@@ -12,4 +12,7 @@ import java.util.List;
 public interface ComplaintCategoryStaffMappingRepository extends JpaRepository<ComplaintCategoryStaffMapping, String> {
     @Query("select c from ComplaintCategoryStaffMapping c where c.staffId = :staffId")
     public List<ComplaintCategoryStaffMapping> findByStaffId(@Param("staffId") String staffId);
+
+    @Query("select c from ComplaintCategoryStaffMapping c where c.categoryId= :categoryId")
+    public List<ComplaintCategoryStaffMapping> findByCategoryId(@Param("categoryId") String categoryId);
 }

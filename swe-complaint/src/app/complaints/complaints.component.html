@@ -43,6 +43,7 @@
             <select id="categoryId" class="form-control" formControlName="categoryId">
               <option [ngValue]="null">All categories</option>
               <option *ngFor="let option of categoryOptions" [ngValue]="option.id">{{option.name}}</option>
+              <option [ngValue]="'others'">Others</option>
             </select>
           </div>
         </div>

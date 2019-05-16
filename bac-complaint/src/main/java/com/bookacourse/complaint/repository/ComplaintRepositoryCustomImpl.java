@@ -35,7 +35,11 @@ public class ComplaintRepositoryCustomImpl implements ComplaintRepositoryCustom 
 			predicates.add(cb.like(cb.lower(complaint.get("topic")), '%' + request.getKeyword() + '%'));
 		}
 		if (StringUtil.isNotEmpty(request.getCategoryId())) {
-			predicates.add(cb.equal(complaint.get("categoryId"), request.getCategoryId()));
+			if (request.getCategoryId().equals("others")) {
+				predicates.add(cb.isNull(complaint.get("categoryId")));
+			} else {
+				predicates.add(cb.equal(complaint.get("categoryId"), request.getCategoryId()));
+			}
 		}
 		if (request.getDateFrom() != null) {
 			predicates.add(cb.greaterThanOrEqualTo(complaint.<Date>get("created"), request.getDateFrom()));
